@@ -1,0 +1,462 @@
+@import url("https://fonts.googleapis.com/css2?family=Asset&display=swap");
+
+$colog-bg: rgb(2, 138, 43);
+$color-red: rgb(216, 32, 32);
+$color-black: rgb(0, 0, 0);
+$color-win: rgb(132, 235, 72);
+$color-off: rgba(141, 140, 140, 0.3);
+
+body {
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background-color: $colog-bg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+//FRONT PAGE
+.container-front {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .logo {
+    transform: scale(1.5);
+  }
+
+  .btn {
+    border: white solid 3px;
+    border-radius: 10px;
+    background-color: $color-off;
+    color: white;
+    font-size: 30px;
+    padding: 5px 30px;
+    margin: 20px;
+    text-decoration: none;
+    font-family: sans-serif;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.5s;
+    overflow: hidden;
+
+    &:hover {
+      background-color: white;
+      color: $color-black;
+    }
+
+    &:before {
+      content: "";
+      background-color: $color-red;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      position: absolute;
+      transform: translateX(-100%) rotate(45deg);
+      transition: all 0.2s;
+    }
+
+    &:hover:before {
+      transform: translateX(100%) rotate(45deg);
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  // MODAL
+  .modal {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    top: 100px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    overflow: hidden;
+
+    .logo-sm {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 0.2rem;
+      right: 1rem;
+      font-size: 5rem;
+      color: #333;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .modal-text {
+      margin-top: 150px;
+      height: 68%;
+      overflow-y: auto;
+    }
+
+    h3 {
+      font-family: sans-serif;
+      margin: 5px 0;
+    }
+
+    p {
+      font-size: 17px;
+      font-family: sans-serif;
+    }
+  }
+}
+
+//CARDS
+.card-body {
+  min-width: 102px;
+  min-height: 141px;
+  border-radius: 12px;
+  margin: 30px;
+}
+
+.card-back {
+  background-image: url(/img/back.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.card-front {
+  position: relative;
+  background-color: white;
+  font-family: "Asset", cursive;
+
+  .number-top {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    height: 20%;
+    width: 30%;
+
+    h1 {
+      position: absolute;
+      font-size: 20px;
+      font-weight: 200;
+    }
+  }
+
+  .number-bottom {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    height: 20%;
+    width: 30%;
+    transform: rotate(180deg);
+
+    h1 {
+      position: absolute;
+      font-size: 20px;
+      font-weight: 200;
+    }
+  }
+
+  .suit {
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .suit-img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 120%;
+      width: 120%;
+    }
+  }
+}
+
+.card-diamond,
+.card-heart {
+  h1 {
+    color: $color-red;
+  }
+}
+
+.card-club,
+.card-spade {
+  h1 {
+    color: $color-black;
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .logo-table {
+    position: absolute;
+    left: 35%;
+    top: 30%;
+    transform: scale(1.5);
+    opacity: 0.2;
+    z-index: -1;
+  }
+
+  .btn-start {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 100px;
+    background-color: $color-black;
+    z-index: 10;
+    color: white;
+    font-size: 30px;
+    border-radius: 15px;
+    border: white 3px solid;
+    cursor: pointer;
+  }
+
+  .top {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 25%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bottom {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 25%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .card-body {
+      cursor: pointer;
+    }
+  }
+
+  .left {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    height: 100%;
+    width: 17%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .card-body {
+      transform: rotate(90deg);
+      margin: 6px;
+    }
+  }
+
+  .right {
+    position: absolute;
+    top: 0;
+    right: 10%;
+    height: 100%;
+    width: 17%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .card-body {
+      transform: rotate(-90deg);
+      margin: 6px;
+    }
+  }
+
+  .score {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 70%;
+    width: 10%;
+
+    display: flex;
+
+    .us,
+    .them {
+      height: 100%;
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: column;
+
+      h1 {
+        margin: 30px 0 10px 0;
+        font-family: sans-serif;
+        color: white;
+        font-size: 20px;
+        text-align: center;
+        font-weight: 200;
+      }
+
+      .round {
+        height: 20px;
+        width: 20px;
+        background-color: $color-off;
+        border-radius: 50%;
+        margin-top: 9px;
+      }
+
+      .points {
+        height: 20px;
+        width: 20px;
+        background-color: $color-off;
+        margin-top: 9px;
+      }
+
+      .point-1 {
+        margin-top: 30px;
+      }
+    }
+  }
+
+  .info {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    height: 10%;
+    width: 7%;
+    border: 3px white solid;
+    border-radius: 20px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      font-family: sans-serif;
+      color: white;
+      font-size: 30px;
+      text-align: center;
+    }
+  }
+
+  .middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50%;
+    width: 45%;
+
+    .mount {
+      .card-body {
+        position: absolute;
+        bottom: 0%;
+        left: 0%;
+        min-width: 66px;
+        min-height: 90px;
+        margin: 0;
+      }
+
+      & > div:nth-child(2) {
+        transform: rotate(10deg);
+      }
+      & > div:nth-child(3) {
+        transform: rotate(15deg);
+      }
+      & > div:nth-child(4) {
+        transform: rotate(5deg);
+      }
+
+      .mount-trump {
+        position: absolute;
+        bottom: 0%;
+        left: 0%;
+        min-width: 66px;
+        min-height: 90px;
+        margin: 0;
+        transform: rotate(75deg) translate(10%, -50%);
+        z-index: -1;
+      }
+    }
+
+    .position-bottom {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 82px;
+      min-height: 111px;
+      margin: 0;
+    }
+
+    .position-top {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%) rotate(180deg);
+      min-width: 82px;
+      min-height: 111px;
+      margin: 0;
+    }
+
+    .position-left {
+      position: absolute;
+      top: 50%;
+      left: 25%;
+      transform: translateY(-50%) rotate(90deg);
+      min-width: 82px;
+      min-height: 111px;
+      margin: 0;
+    }
+
+    .position-right {
+      position: absolute;
+      top: 50%;
+      right: 25%;
+      transform: translateY(-50%) rotate(-90deg);
+      min-width: 82px;
+      min-height: 111px;
+      margin: 0;
+    }
+  }
+}

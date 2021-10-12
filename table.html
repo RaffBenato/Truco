@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Truco!</title>
+  </head>
+  <body>
+    <div class="container">
+      <img class="logo-table" src="img/logo.png" alt="Truco!" />
+
+      <button class="btn-start">Start Round</button>
+
+      <div class="top">
+        <div class="player3-card1 card-body card-back hidden"></div>
+        <div class="player3-card2 card-body card-back hidden"></div>
+        <div class="player3-card3 card-body card-back hidden"></div>
+      </div>
+
+      <div class="bottom">
+        <div class="player1-card1 card-body card-back hidden"></div>
+        <div class="player1-card2 card-body card-back hidden"></div>
+        <div class="player1-card3 card-body card-back hidden"></div>
+      </div>
+
+      <div class="left">
+        <div class="player2-card1 card-body card-back hidden"></div>
+        <div class="player2-card2 card-body card-back hidden"></div>
+        <div class="player2-card3 card-body card-back hidden"></div>
+      </div>
+
+      <div class="right">
+        <div class="player4-card1 card-body card-back hidden"></div>
+        <div class="player4-card2 card-body card-back hidden"></div>
+        <div class="player4-card3 card-body card-back hidden"></div>
+      </div>
+
+      <div class="middle">
+        <div class="mount">
+          <div class="card-body card-back"></div>
+          <div class="card-body card-back"></div>
+          <div class="card-body card-back"></div>
+          <div class="card-body card-back"></div>
+
+          <div class="mount-trump card-body card-front card-spade hidden">
+            <div class="number-top">
+              <h1 class="flip-number">6</h1>
+            </div>
+            <div class="number-bottom">
+              <h1 class="flip-number">6</h1>
+            </div>
+            <div class="suit">
+              <img class="suit-img" src="img/spades.png" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <div class="position-bottom card-body card-front hidden">
+          <div class="number-top">
+            <h1>K</h1>
+          </div>
+          <div class="number-bottom">
+            <h1>K</h1>
+          </div>
+          <div class="suit">
+            <img class="suit-img" src="img/spades.png" alt="" />
+          </div>
+        </div>
+
+        <div class="position-top card-body card-front hidden">
+          <div class="number-top">
+            <h1>11</h1>
+          </div>
+          <div class="number-bottom">
+            <h1>11</h1>
+          </div>
+          <div class="suit">
+            <img class="suit-img" src="img/hearts.png" alt="" />
+          </div>
+        </div>
+
+        <div class="position-left card-body card-front hidden">
+          <div class="number-top">
+            <h1>10</h1>
+          </div>
+          <div class="number-bottom">
+            <h1>10</h1>
+          </div>
+          <div class="suit">
+            <img class="suit-img" src="img/clubs.png" alt="" />
+          </div>
+        </div>
+
+        <div class="position-right card-body card-front hidden">
+          <div class="number-top">
+            <h1>3</h1>
+          </div>
+          <div class="number-bottom">
+            <h1>3</h1>
+          </div>
+          <div class="suit">
+            <img class="suit-img" src="img/diamonds.png" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="score">
+        <div class="us">
+          <h1>Us</h1>
+          <div class="round round-1"></div>
+          <div class="round round-2"></div>
+          <div class="round round-3"></div>
+
+          <div class="points point-1"></div>
+          <div class="points point-2"></div>
+          <div class="points point-3"></div>
+          <div class="points point-4"></div>
+          <div class="points point-5"></div>
+          <div class="points point-6"></div>
+          <div class="points point-7"></div>
+          <div class="points point-8"></div>
+          <div class="points point-9"></div>
+          <div class="points point-10"></div>
+          <div class="points point-11"></div>
+          <div class="points point-12"></div>
+        </div>
+        <div class="them">
+          <h1>Them</h1>
+          <div class="round round-1"></div>
+          <div class="round round-2"></div>
+          <div class="round round-3"></div>
+
+          <div class="points point-1"></div>
+          <div class="points point-2"></div>
+          <div class="points point-3"></div>
+          <div class="points point-4"></div>
+          <div class="points point-5"></div>
+          <div class="points point-6"></div>
+          <div class="points point-7"></div>
+          <div class="points point-8"></div>
+          <div class="points point-9"></div>
+          <div class="points point-10"></div>
+          <div class="points point-11"></div>
+          <div class="points point-12"></div>
+        </div>
+      </div>
+      <div class="info">
+        <h1>x 1</h1>
+      </div>
+    </div>
+
+    <script src="table.js"></script>
+  </body>
+</html>

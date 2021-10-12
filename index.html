@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Truco!</title>
+  </head>
+  <body>
+    <div class="container-front">
+      <img class="logo" src="img/logo.png" alt="Truco!" />
+
+      <button class="btn btn-how">Rules</button>
+
+      <a href="table.html" class="btn btn-play">Play</a>
+
+      <div class="overlay hidden"></div>
+
+      <div class="modal hidden">
+        <button class="close-modal">&times;</button>
+        <img class="logo-sm" src="img/logo.png" alt="" />
+        <div class="modal-text">
+          <h3>Description</h3>
+          <p>
+            The game has 4 players, forming duos, sitting in alternative
+            positions.<br />
+            Each player gets 3 cards from a traditional deck without, Jokers,
+            8's, 9's or 10's. The object is to score 12 points before the other
+            duo.
+          </p>
+          <h3>Definitions</h3>
+          <p>
+            Trumps: The highest cards in the game, defined by the Flip Card.
+            <br />
+            Flip Card: A card that is drawn from the pile and placed face up.
+            <br />
+            Round: A sequence of 4 plays, where each player plays a card. <br />
+            Hand: Composed by 2 or 3 rounds, initially are worth 1 point. <br />
+            Truco: Kind of a bet, where the hand value of points is raised to 3.
+            <br />
+            Six: A bet that raises the Truco to 6 points. <br />
+            Nine: A bet that raises the Six to 9 points. <br />
+            Twelve: A bet that raises the Nine to 12 points. <br />
+            11's Hand: When one of the teams reach 11 points. <br />
+            Iron Hand: When both teams reach 11 points <br />
+            Covered Card: Card with face down and it is worh nothing. <br />
+            Cards Order (from lowest to highest): 4, 5, 6, 7, Q, J, K, A, 2, 3,
+            Trump Cards. <br />
+            Suit Order (from lowest to highest): Diamonds, Spades, Hearts and
+            Clubs.
+          </p>
+          <h3>The Game</h3>
+          <p>
+            After cards are distributed, the Flip Card is revealed from the top
+            of the pile. It defines the Trump cards. <br />
+            <br />
+            Each hand has 3 rounds, where each player plays one card. Whatever
+            team wins the most rounds gets the point. Initially each hand is
+            worth 1 point, at every player's turn they may call Truco to
+            increase the hand to 3 points. The other team then decide if they
+            accept, raise it to 6 or run. If they run the team that called Truco
+            wins. Hands can be raised to Truco, 6, 9 and 12. <br />
+            If the first round is a draw, whoever wins the second round wins the
+            Hand. If the second round is a draw, whoever won the first round
+            wins the Hand. If the third round is a draw, whoever won the first
+            round wins the Hand. When all 3 rounds are draws, the Hand is
+            cancelled.
+            <br />
+            At the 11's Hand the players cant ask for Truco, if they do so, they
+            automatically loose the game. The duo with 11 points can see each
+            other's cards and decide if they want to play the hand, if they do,
+            the hand is worth 3 points, if they run the opposing duo gets 1
+            point.
+            <br />
+            If both teams reach 11 points then they play the Iron Hand, where
+            all cards stay face down and players play blind.
+          </p>
+        </div>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
