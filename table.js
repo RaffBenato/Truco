@@ -1,25 +1,31 @@
 "use strict";
 
 const btnStartRound = document.querySelector(".btn-start");
-const player1Card1 = document.querySelector(".player1-card1");
-const player1Card2 = document.querySelector(".player1-card2");
-const player1Card3 = document.querySelector(".player1-card3");
-const player2Card1 = document.querySelector(".player2-card1");
-const player2Card2 = document.querySelector(".player2-card2");
-const player2Card3 = document.querySelector(".player2-card3");
-const player3Card1 = document.querySelector(".player3-card1");
-const player3Card2 = document.querySelector(".player3-card2");
-const player3Card3 = document.querySelector(".player3-card3");
-const player4Card1 = document.querySelector(".player4-card1");
-const player4Card2 = document.querySelector(".player4-card2");
-const player4Card3 = document.querySelector(".player4-card3");
-const mountFlipCard = document.querySelector(".mount-trump");
+const player1Card1El = document.querySelector(".player1-card1");
+const player1Card2El = document.querySelector(".player1-card2");
+const player1Card3El = document.querySelector(".player1-card3");
+const player2Card1El = document.querySelector(".player2-card1");
+const player2Card2El = document.querySelector(".player2-card2");
+const player2Card3El = document.querySelector(".player2-card3");
+const player3Card1El = document.querySelector(".player3-card1");
+const player3Card2El = document.querySelector(".player3-card2");
+const player3Card3El = document.querySelector(".player3-card3");
+const player4Card1El = document.querySelector(".player4-card1");
+const player4Card2El = document.querySelector(".player4-card2");
+const player4Card3El = document.querySelector(".player4-card3");
+
+const mountFlipCardEl = document.querySelector(".mount-trump");
+const mountFlipCardSuitEl = document.querySelector(".flip-suit-img");
+const mountFlipCardNumberEl = document.querySelector(".flip-number");
 
 let deck = [];
 let card = []; //card array items = [index, number, suit, power]
 const cardNumbers = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"];
 const cardSuits = ["diamond", "spade", "heart", "club"];
 let flippedCard = [];
+let flippedPower;
+let flippedNumber;
+let flippedSuit;
 let power;
 let trumpCards = [];
 
@@ -54,19 +60,24 @@ btnStartRound.addEventListener("click", function () {
   btnStartRound.classList.add("hidden");
 
   //DISPLAY CARDS
-  player1Card1.classList.remove("hidden");
-  player1Card2.classList.remove("hidden");
-  player1Card3.classList.remove("hidden");
-  player2Card1.classList.remove("hidden");
-  player2Card2.classList.remove("hidden");
-  player2Card3.classList.remove("hidden");
-  player3Card1.classList.remove("hidden");
-  player3Card2.classList.remove("hidden");
-  player3Card3.classList.remove("hidden");
-  player4Card1.classList.remove("hidden");
-  player4Card2.classList.remove("hidden");
-  player4Card3.classList.remove("hidden");
-  mountFlipCard.classList.remove("hidden");
+  player1Card1El.classList.remove("hidden");
+  player1Card2El.classList.remove("hidden");
+  player1Card3El.classList.remove("hidden");
+  player2Card1El.classList.remove("hidden");
+  player2Card2El.classList.remove("hidden");
+  player2Card3El.classList.remove("hidden");
+  player3Card1El.classList.remove("hidden");
+  player3Card2El.classList.remove("hidden");
+  player3Card3El.classList.remove("hidden");
+  player4Card1El.classList.remove("hidden");
+  player4Card2El.classList.remove("hidden");
+  player4Card3El.classList.remove("hidden");
+
+  //SETTING UP THE FLIPPED CARD
+  mountFlipCardEl.classList.add(`card-${flippedSuit}`);
+  mountFlipCardSuitEl.src = `img/${flippedSuit}.png`;
+  mountFlipCardNumberEl.textContent = flippedNumber;
+  mountFlipCardEl.classList.remove("hidden");
 });
 
 //CREATES THE DECK OF CARDS
@@ -116,7 +127,9 @@ function handOutCards(arr) {
 //FLIPS CARD
 function flipCard() {
   flippedCard = deck[handOutIndex];
-  let flippedPower = flippedCard[3];
+  flippedPower = flippedCard[3];
+  flippedNumber = flippedCard[1];
+  flippedSuit = flippedCard[2];
   if (flippedPower === 10) {
     power = 1;
   } else {
