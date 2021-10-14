@@ -1,6 +1,7 @@
 "use strict";
 
 const btnStartRound = document.querySelector(".btn-start");
+//PLAYER 1 ELEMENTS
 const player1Card1El = document.querySelector(".player1-card1");
 const player1Card1NumberEl = document.querySelectorAll(".player1-card1-number");
 const player1Card1SuitEl = document.querySelector(".player1-card1-suit");
@@ -13,16 +14,66 @@ const player1Card3El = document.querySelector(".player1-card3");
 const player1Card3NumberEl = document.querySelectorAll(".player1-card3-number");
 const player1Card3SuitEl = document.querySelector(".player1-card3-suit");
 
+//PLAYER 2 ELEMENTS
 const player2Card1El = document.querySelector(".player2-card1");
 const player2Card2El = document.querySelector(".player2-card2");
 const player2Card3El = document.querySelector(".player2-card3");
+
+//PLAYER 3 ELEMENTS
 const player3Card1El = document.querySelector(".player3-card1");
 const player3Card2El = document.querySelector(".player3-card2");
 const player3Card3El = document.querySelector(".player3-card3");
+
+//PLAYER 4 ELEMENTS
 const player4Card1El = document.querySelector(".player4-card1");
 const player4Card2El = document.querySelector(".player4-card2");
 const player4Card3El = document.querySelector(".player4-card3");
 const playerCardsEl = document.querySelectorAll(".player-card");
+
+//MIDDLE TABLE CARDS (PLAYED CARDS)
+//PLAYER 1
+const positionBottomEl = document.querySelector(".position-bottom");
+const positionBottomNumberEl = document.querySelectorAll(
+  ".position-bottom-number"
+);
+const positionBottomSuitEl = document.querySelector(".position-bottom-suit");
+
+//PLAYER 2
+const positionLeftEl = document.querySelector(".position-left");
+const positionLeftNumberEl = document.querySelectorAll(".position-left-number");
+const positionLeftSuitEl = document.querySelector(".position-left-suit");
+
+//PLAYER 3
+const positionTopEl = document.querySelector(".position-top");
+const positionTopNumberEl = document.querySelectorAll(".position-top-number");
+const positionTopSuitEl = document.querySelector(".position-top-suit");
+
+//PLAYER 4
+const positionRightEl = document.querySelector(".position-right");
+const positionRightNumberEl = document.querySelectorAll(
+  ".position-right-number"
+);
+const positionRightSuitEl = document.querySelector(".position-right-suit");
+
+//ARRAY WITH ALL THE MIDDLE TABLE CARDS
+const positionOfCardsEl = [
+  positionBottomEl,
+  positionLeftEl,
+  positionTopEl,
+  positionRightEl,
+];
+const positionNumbersEl = [
+  positionBottomNumberEl,
+  positionLeftNumberEl,
+  positionTopNumberEl,
+  positionRightNumberEl,
+];
+const positionSuitsEl = [
+  positionBottomSuitEl,
+  positionLeftSuitEl,
+  positionTopSuitEl,
+  positionRightSuitEl,
+];
 
 const trumpNumbersEl = document.querySelectorAll(".trump-number");
 const trumpSuitInfoEl = document.querySelectorAll(".suit-info");
@@ -35,7 +86,7 @@ let deck = [];
 let card = []; //card array items = [index, number, suit, power]
 const cardNumbers = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"];
 const cardSuits = ["diamond", "spade", "heart", "club"];
-const isMyTurn = false;
+let isMyTurn = false;
 
 //FLIPPED AND TRUMP CARDS
 let flippedCard = [];
@@ -67,14 +118,10 @@ btnStartRound.addEventListener("click", function () {
   ChangeTrumpPower();
 
   //TO BE DELETED
-  // console.log(deck);
   console.log(handPlayer1);
   console.log(handPlayer2);
   console.log(handPlayer3);
   console.log(handPlayer4);
-  // console.log(flippedCard);
-  // console.log(power);
-  // console.log(trumpCards);
 
   btnStartRound.classList.add("hidden");
 
@@ -90,19 +137,19 @@ btnStartRound.addEventListener("click", function () {
     trumpSuitInfoEl[i].classList.remove("hidden");
   }
 
-  //SETTING UP PLAYER 1 CARDS
+  //SETTING UP PLAYER 1 CARD 1
   player1Card1El.classList.add(`card-${handPlayer1[0][2]}`);
   player1Card1SuitEl.src = `img/${handPlayer1[0][2]}.png`;
   player1Card1NumberEl[0].textContent = handPlayer1[0][1];
   player1Card1NumberEl[1].textContent = handPlayer1[0][1];
 
-  //SETTING UP PLAYER 2 CARDS
+  //SETTING UP PLAYER 1 CARD 2
   player1Card2El.classList.add(`card-${handPlayer1[1][2]}`);
   player1Card2SuitEl.src = `img/${handPlayer1[1][2]}.png`;
   player1Card2NumberEl[0].textContent = handPlayer1[1][1];
   player1Card2NumberEl[1].textContent = handPlayer1[1][1];
 
-  //SETTING UP PLAYER 3 CARDS
+  //SETTING UP PLAYER 1 CARD 3
   player1Card3El.classList.add(`card-${handPlayer1[2][2]}`);
   player1Card3SuitEl.src = `img/${handPlayer1[2][2]}.png`;
   player1Card3NumberEl[0].textContent = handPlayer1[2][1];
@@ -204,25 +251,84 @@ function ChangeTrumpPower() {
 
 //SIMULATING A ROUND
 function playRound() {
-  roundCards[0] = handPlayer1[0];
-  roundCards[1] = handPlayer2[0];
-  roundCards[2] = handPlayer3[0];
-  roundCards[3] = handPlayer4[0];
-  console.log(roundCards);
-
-  //find the highest powered card
-  let max = 0;
-  let i = 0;
-  let roundWinner;
-  for (i = 0; i < roundCards.length; i++) {
-    if (roundCards[i][3] > max) {
-      max = roundCards[i][3];
-      roundWinner = i;
-    }
+  if (!isMyTurn === true) {
+    roundCards[1] = handPlayer2[0];
+    PlayCard(1, handPlayer2, 0);
+    roundCards[2] = handPlayer3[0];
+    PlayCard(2, handPlayer3, 0);
+    roundCards[3] = handPlayer4[0];
+    PlayCard(3, handPlayer4, 0);
+    isMyTurn = true;
+    checkRoundWinner();
   }
-  console.log(
-    `Player ${roundWinner + 1} is the winner with the power of ${max}`
+}
+
+//CHECKS THE ROUND WINNER
+const checkRoundWinner = function () {
+  if (!roundCards.includes(undefined)) {
+    let max = 0;
+    let i = 0;
+    let roundWinner;
+    for (i = 0; i < roundCards.length; i++) {
+      if (roundCards[i][3] > max) {
+        max = roundCards[i][3];
+        roundWinner = i;
+      }
+    }
+
+    if (roundWinner + 1 === 1 || roundWinner + 1 === 3) {
+      btnStartRound.textContent = "We win the Round!";
+    } else {
+      btnStartRound.textContent = "They win the Round!";
+    }
+    btnStartRound.classList.remove("hidden");
+  } else {
+  }
+};
+
+//PLAYER 1 BUTTONS
+//CARD 1
+player1Card1El.addEventListener("click", function () {
+  if (isMyTurn) {
+    roundCards[0] = handPlayer1[0];
+    PlayCard(0, handPlayer1, 0);
+    player1Card1El.classList.add("hidden");
+    checkRoundWinner();
+    isMyTurn = false;
+  }
+});
+
+//CARD 2
+player1Card2El.addEventListener("click", function () {
+  if (isMyTurn) {
+    roundCards[0] = handPlayer1[1];
+    PlayCard(0, handPlayer1, 1);
+    player1Card2El.classList.add("hidden");
+    checkRoundWinner();
+    isMyTurn = false;
+  }
+});
+
+//CARD 3
+player1Card3El.addEventListener("click", function () {
+  if (isMyTurn) {
+    roundCards[0] = handPlayer1[2];
+    PlayCard(0, handPlayer1, 2);
+    player1Card3El.classList.add("hidden");
+    checkRoundWinner();
+    isMyTurn = false;
+  }
+});
+
+//PLAY CARD
+function PlayCard(position, whichPlayer, whichCard) {
+  positionOfCardsEl[position].classList.remove("hidden");
+  positionOfCardsEl[position].classList.add(
+    `card-${whichPlayer[whichCard][2]}`
   );
+  positionSuitsEl[position].src = `img/${whichPlayer[whichCard][2]}.png`;
+  positionNumbersEl[position][0].textContent = whichPlayer[whichCard][1];
+  positionNumbersEl[position][1].textContent = whichPlayer[whichCard][1];
 }
 
 //ON LOAD
