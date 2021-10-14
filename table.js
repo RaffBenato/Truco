@@ -2,8 +2,17 @@
 
 const btnStartRound = document.querySelector(".btn-start");
 const player1Card1El = document.querySelector(".player1-card1");
+const player1Card1NumberEl = document.querySelectorAll(".player1-card1-number");
+const player1Card1SuitEl = document.querySelector(".player1-card1-suit");
+
 const player1Card2El = document.querySelector(".player1-card2");
+const player1Card2NumberEl = document.querySelectorAll(".player1-card2-number");
+const player1Card2SuitEl = document.querySelector(".player1-card2-suit");
+
 const player1Card3El = document.querySelector(".player1-card3");
+const player1Card3NumberEl = document.querySelectorAll(".player1-card3-number");
+const player1Card3SuitEl = document.querySelector(".player1-card3-suit");
+
 const player2Card1El = document.querySelector(".player2-card1");
 const player2Card2El = document.querySelector(".player2-card2");
 const player2Card3El = document.querySelector(".player2-card3");
@@ -26,6 +35,8 @@ let deck = [];
 let card = []; //card array items = [index, number, suit, power]
 const cardNumbers = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"];
 const cardSuits = ["diamond", "spade", "heart", "club"];
+
+//FLIPPED AND TRUMP CARDS
 let flippedCard = [];
 let flippedPower;
 let flippedNumber;
@@ -38,6 +49,9 @@ let handPlayer1 = [];
 let handPlayer2 = [];
 let handPlayer3 = [];
 let handPlayer4 = [];
+
+//ROUND CARDS
+let roundCards = [];
 
 btnStartRound.addEventListener("click", function () {
   //STARTS ROUND
@@ -52,21 +66,16 @@ btnStartRound.addEventListener("click", function () {
   ChangeTrumpPower();
 
   //TO BE DELETED
-  console.log(deck);
+  // console.log(deck);
   console.log(handPlayer1);
-  console.log(handPlayer2);
-  console.log(handPlayer3);
-  console.log(handPlayer4);
-  console.log(flippedCard);
-  console.log(power);
-  console.log(trumpCards);
+  // console.log(handPlayer2);
+  // console.log(handPlayer3);
+  // console.log(handPlayer4);
+  // console.log(flippedCard);
+  // console.log(power);
+  // console.log(trumpCards);
 
   btnStartRound.classList.add("hidden");
-
-  // DISPLAY CARDS
-  for (let i = 0; i < playerCardsEl.length; i++) {
-    playerCardsEl[i].classList.remove("hidden");
-  }
 
   //SETTING UP THE FLIPPED CARD
   mountFlipCardEl.classList.add(`card-${flippedSuit}`);
@@ -78,6 +87,29 @@ btnStartRound.addEventListener("click", function () {
   for (let i = 0; i < 4; i++) {
     trumpNumbersEl[i].textContent = trumpCards[i][1];
     trumpSuitInfoEl[i].classList.remove("hidden");
+  }
+
+  //SETTING UP PLAYER 1 CARDS
+  player1Card1El.classList.add(`card-${handPlayer1[0][2]}`);
+  player1Card1SuitEl.src = `img/${handPlayer1[0][2]}.png`;
+  player1Card1NumberEl[0].textContent = handPlayer1[0][1];
+  player1Card1NumberEl[1].textContent = handPlayer1[0][1];
+
+  //SETTING UP PLAYER 2 CARDS
+  player1Card2El.classList.add(`card-${handPlayer1[1][2]}`);
+  player1Card2SuitEl.src = `img/${handPlayer1[1][2]}.png`;
+  player1Card2NumberEl[0].textContent = handPlayer1[1][1];
+  player1Card2NumberEl[1].textContent = handPlayer1[1][1];
+
+  //SETTING UP PLAYER 3 CARDS
+  player1Card3El.classList.add(`card-${handPlayer1[2][2]}`);
+  player1Card3SuitEl.src = `img/${handPlayer1[2][2]}.png`;
+  player1Card3NumberEl[0].textContent = handPlayer1[2][1];
+  player1Card3NumberEl[1].textContent = handPlayer1[2][1];
+
+  // DISPLAY CARDS
+  for (let i = 0; i < playerCardsEl.length; i++) {
+    playerCardsEl[i].classList.remove("hidden");
   }
 });
 
@@ -166,6 +198,8 @@ function ChangeTrumpPower() {
     }
   }
 }
+
+//SIMULATING A ROUND
 
 //ON LOAD
 window.onload = function () {};
