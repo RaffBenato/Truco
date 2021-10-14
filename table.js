@@ -35,6 +35,7 @@ let deck = [];
 let card = []; //card array items = [index, number, suit, power]
 const cardNumbers = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"];
 const cardSuits = ["diamond", "spade", "heart", "club"];
+const isMyTurn = false;
 
 //FLIPPED AND TRUMP CARDS
 let flippedCard = [];
@@ -68,9 +69,9 @@ btnStartRound.addEventListener("click", function () {
   //TO BE DELETED
   // console.log(deck);
   console.log(handPlayer1);
-  // console.log(handPlayer2);
-  // console.log(handPlayer3);
-  // console.log(handPlayer4);
+  console.log(handPlayer2);
+  console.log(handPlayer3);
+  console.log(handPlayer4);
   // console.log(flippedCard);
   // console.log(power);
   // console.log(trumpCards);
@@ -111,6 +112,8 @@ btnStartRound.addEventListener("click", function () {
   for (let i = 0; i < playerCardsEl.length; i++) {
     playerCardsEl[i].classList.remove("hidden");
   }
+
+  playRound();
 });
 
 //CREATES THE DECK OF CARDS
@@ -200,6 +203,27 @@ function ChangeTrumpPower() {
 }
 
 //SIMULATING A ROUND
+function playRound() {
+  roundCards[0] = handPlayer1[0];
+  roundCards[1] = handPlayer2[0];
+  roundCards[2] = handPlayer3[0];
+  roundCards[3] = handPlayer4[0];
+  console.log(roundCards);
+
+  //find the highest powered card
+  let max = 0;
+  let i = 0;
+  let roundWinner;
+  for (i = 0; i < roundCards.length; i++) {
+    if (roundCards[i][3] > max) {
+      max = roundCards[i][3];
+      roundWinner = i;
+    }
+  }
+  console.log(
+    `Player ${roundWinner + 1} is the winner with the power of ${max}`
+  );
+}
 
 //ON LOAD
 window.onload = function () {};
