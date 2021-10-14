@@ -13,6 +13,10 @@ const player3Card3El = document.querySelector(".player3-card3");
 const player4Card1El = document.querySelector(".player4-card1");
 const player4Card2El = document.querySelector(".player4-card2");
 const player4Card3El = document.querySelector(".player4-card3");
+const playerCardsEl = document.querySelectorAll(".player-card");
+
+const trumpNumbersEl = document.querySelectorAll(".trump-number");
+const trumpSuitInfoEl = document.querySelectorAll(".suit-info");
 
 const mountFlipCardEl = document.querySelector(".mount-trump");
 const mountFlipCardSuitEl = document.querySelector(".flip-suit-img");
@@ -59,25 +63,22 @@ btnStartRound.addEventListener("click", function () {
 
   btnStartRound.classList.add("hidden");
 
-  //DISPLAY CARDS
-  player1Card1El.classList.remove("hidden");
-  player1Card2El.classList.remove("hidden");
-  player1Card3El.classList.remove("hidden");
-  player2Card1El.classList.remove("hidden");
-  player2Card2El.classList.remove("hidden");
-  player2Card3El.classList.remove("hidden");
-  player3Card1El.classList.remove("hidden");
-  player3Card2El.classList.remove("hidden");
-  player3Card3El.classList.remove("hidden");
-  player4Card1El.classList.remove("hidden");
-  player4Card2El.classList.remove("hidden");
-  player4Card3El.classList.remove("hidden");
+  // DISPLAY CARDS
+  for (let i = 0; i < playerCardsEl.length; i++) {
+    playerCardsEl[i].classList.remove("hidden");
+  }
 
   //SETTING UP THE FLIPPED CARD
   mountFlipCardEl.classList.add(`card-${flippedSuit}`);
   mountFlipCardSuitEl.src = `img/${flippedSuit}.png`;
   mountFlipCardNumberEl.textContent = flippedNumber;
   mountFlipCardEl.classList.remove("hidden");
+
+  //SETTING UP THE TRUMP CARD NUMBERS
+  for (let i = 0; i < 4; i++) {
+    trumpNumbersEl[i].textContent = trumpCards[i][1];
+    trumpSuitInfoEl[i].classList.remove("hidden");
+  }
 });
 
 //CREATES THE DECK OF CARDS

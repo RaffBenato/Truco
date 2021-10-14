@@ -360,11 +360,13 @@ body {
 
   .info {
     position: absolute;
-    bottom: 10%;
-    left: 0;
-    height: 10%;
+    top: 2%;
+    left: 12%;
+    height: 8%;
     width: 7%;
+    padding: 10px;
     border: 3px white solid;
+    background-color: rgba(255, 245, 245, 0.3);
     border-radius: 20px;
     margin: 20px;
     display: flex;
@@ -376,6 +378,78 @@ body {
       color: white;
       font-size: 30px;
       text-align: center;
+    }
+  }
+
+  .trump-cards {
+    position: absolute;
+    bottom: 0;
+    left: 0%;
+    height: 13%;
+    width: 20%;
+    padding: 10px;
+    border: 3px white solid;
+    background-color: rgba(255, 245, 245, 0.3);
+    border-radius: 20px;
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template:
+      "a1 a2 a3 a4"
+      "b1 b2 b3 b4";
+
+    .red1,
+    .red2 {
+      font-family: "Asset", cursive;
+      color: $color-red;
+      font-size: 30px;
+      text-align: center;
+    }
+
+    .red1 {
+      grid-area: a2;
+    }
+    .red2 {
+      grid-area: a4;
+    }
+
+    .black1,
+    .black2 {
+      font-family: "Asset", cursive;
+      color: $color-black;
+      font-size: 30px;
+      text-align: center;
+    }
+
+    .black1 {
+      grid-area: a1;
+    }
+    .black2 {
+      grid-area: a3;
+    }
+
+    .suit-img1 {
+      width: 50px;
+      grid-area: b1;
+      transform: translateX(30%);
+    }
+
+    .suit-img2 {
+      width: 50px;
+      grid-area: b2;
+      transform: translate(30%, 5%);
+    }
+
+    .suit-img3 {
+      width: 50px;
+      grid-area: b3;
+      transform: translateX(30%);
+    }
+
+    .suit-img4 {
+      width: 50px;
+      grid-area: b4;
+      transform: translate(30%, -10%);
     }
   }
 
