@@ -14,6 +14,8 @@ const player1Card3El = document.querySelector(".player1-card3");
 const player1Card3NumberEl = document.querySelectorAll(".player1-card3-number");
 const player1Card3SuitEl = document.querySelector(".player1-card3-suit");
 
+const player1CardsEl = [player1Card1El, player1Card2El, player1Card3El];
+
 //PLAYER 2 ELEMENTS
 const player2Card1El = document.querySelector(".player2-card1");
 const player2Card2El = document.querySelector(".player2-card2");
@@ -87,6 +89,7 @@ let card = []; //card array items = [index, number, suit, power]
 const cardNumbers = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"];
 const cardSuits = ["diamond", "spade", "heart", "club"];
 let isMyTurn = false;
+const timeDelay = 600;
 
 //FLIPPED AND TRUMP CARDS
 let flippedCard = [];
@@ -104,6 +107,7 @@ let handPlayer4 = [];
 
 //ROUND CARDS
 let roundCards = [];
+let roundTurn = [handPlayer1, handPlayer2, handPlayer3, handPlayer4];
 
 btnStartRound.addEventListener("click", function () {
   //STARTS ROUND
@@ -248,20 +252,54 @@ function ChangeTrumpPower() {
     }
   }
 }
-
-//SIMULATING A ROUND
+// IMPORTANT
+//PLAYING A ROUND
 function playRound() {
-  if (!isMyTurn === true) {
-    roundCards[1] = handPlayer2[0];
-    PlayCard(1, handPlayer2, 0);
-    roundCards[2] = handPlayer3[0];
-    PlayCard(2, handPlayer3, 0);
-    roundCards[3] = handPlayer4[0];
-    PlayCard(3, handPlayer4, 0);
+  if (roundTurn[0] === handPlayer1) {
     isMyTurn = true;
-    checkRoundWinner();
+  } else {
+    simulateRound();
   }
 }
+
+//SIMULATING THE OTHER PLAYERS ROUND
+function simulateRound() {
+  if (!isMyTurn === true) {
+    const timeDelay = 600;
+    setTimeout(function () {
+      roundCards[1] = handPlayer2[0];
+      PlayCard(1, handPlayer2, 0);
+
+      setTimeout(function () {
+        roundCards[2] = handPlayer3[0];
+        PlayCard(2, handPlayer3, 0);
+
+        setTimeout(function () {
+          roundCards[3] = handPlayer4[0];
+          PlayCard(3, handPlayer4, 0);
+
+          setTimeout(function () {
+            isMyTurn = true;
+            checkRoundWinner();
+          }, timeDelay);
+        }, timeDelay);
+      }, timeDelay);
+    }, timeDelay);
+  }
+}
+
+//PLAY CARD
+function PlayCard(position, whichPlayer, whichCard) {
+  positionOfCardsEl[position].classList.remove("hidden");
+  positionOfCardsEl[position].classList.add(
+    `card-${whichPlayer[whichCard][2]}`
+  );
+  positionSuitsEl[position].src = `img/${whichPlayer[whichCard][2]}.png`;
+  positionNumbersEl[position][0].textContent = whichPlayer[whichCard][1];
+  positionNumbersEl[position][1].textContent = whichPlayer[whichCard][1];
+}
+
+// IMPORTANT
 
 //CHECKS THE ROUND WINNER
 function checkRoundWinner() {
@@ -279,64 +317,55 @@ function checkRoundWinner() {
     if (roundWinner + 1 === 1 || roundWinner + 1 === 3) {
       if (max === roundCards[1][3] || max === roundCards[3][3]) {
         btnStartRound.textContent = "It is a draw!";
+        btnStartRound.style.backgroundColor = "rgba(234, 220, 14, 0.8)";
       } else {
         btnStartRound.textContent = "We win the Round!";
+        btnStartRound.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
       }
     } else {
       if (max === roundCards[0][3] || max === roundCards[2][3]) {
         btnStartRound.textContent = "It is a draw!";
+        btnStartRound.style.backgroundColor = "rgba(234, 220, 14, 0.8)";
+        btnStartRound.style.color = "black";
       } else {
         btnStartRound.textContent = "They win the Round!";
+        btnStartRound.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
       }
     }
     btnStartRound.classList.remove("hidden");
-  } else {
+
+    setTimeout(function () {
+      btnStartRound.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+      btnStartRound.textContent = "Play next Round";
+    }, timeDelay * 2);
+    //CHANGE THE ORDER OF PLAY FOR THE NEXT ROUND
+    [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
+      roundTurn[1],
+      roundTurn[2],
+      roundTurn[3],
+      roundTurn[0],
+    ];
+    console.log(roundTurn);
   }
 }
 
 //PLAYER 1 BUTTONS
-//CARD 1
-player1Card1El.addEventListener("click", function () {
-  if (isMyTurn) {
-    roundCards[0] = handPlayer1[0];
-    PlayCard(0, handPlayer1, 0);
-    player1Card1El.classList.add("hidden");
-    checkRoundWinner();
-    isMyTurn = false;
-  }
-});
-
-//CARD 2
-player1Card2El.addEventListener("click", function () {
-  if (isMyTurn) {
-    roundCards[0] = handPlayer1[1];
-    PlayCard(0, handPlayer1, 1);
-    player1Card2El.classList.add("hidden");
-    checkRoundWinner();
-    isMyTurn = false;
-  }
-});
-
-//CARD 3
-player1Card3El.addEventListener("click", function () {
-  if (isMyTurn) {
-    roundCards[0] = handPlayer1[2];
-    PlayCard(0, handPlayer1, 2);
-    player1Card3El.classList.add("hidden");
-    checkRoundWinner();
-    isMyTurn = false;
-  }
-});
-
-//PLAY CARD
-function PlayCard(position, whichPlayer, whichCard) {
-  positionOfCardsEl[position].classList.remove("hidden");
-  positionOfCardsEl[position].classList.add(
-    `card-${whichPlayer[whichCard][2]}`
-  );
-  positionSuitsEl[position].src = `img/${whichPlayer[whichCard][2]}.png`;
-  positionNumbersEl[position][0].textContent = whichPlayer[whichCard][1];
-  positionNumbersEl[position][1].textContent = whichPlayer[whichCard][1];
+for (let i = 0; i < player1CardsEl.length; i++) {
+  player1CardsEl[i].addEventListener("click", function () {
+    if (isMyTurn) {
+      roundCards[0] = handPlayer1[i];
+      PlayCard(0, handPlayer1, i);
+      player1CardsEl[i].classList.add("hidden");
+      if (roundTurn[3] === handPlayer1) {
+        setTimeout(function () {
+          checkRoundWinner();
+        }, timeDelay);
+      } else {
+        isMyTurn = false;
+        simulateRound();
+      }
+    }
+  });
 }
 
 //ON LOAD
