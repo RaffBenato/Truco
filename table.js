@@ -264,7 +264,7 @@ function playRound() {
 }
 
 //CHECKS THE ROUND WINNER
-const checkRoundWinner = function () {
+function checkRoundWinner() {
   if (!roundCards.includes(undefined)) {
     let max = 0;
     let i = 0;
@@ -277,14 +277,22 @@ const checkRoundWinner = function () {
     }
 
     if (roundWinner + 1 === 1 || roundWinner + 1 === 3) {
-      btnStartRound.textContent = "We win the Round!";
+      if (max === roundCards[1][3] || max === roundCards[3][3]) {
+        btnStartRound.textContent = "It is a draw!";
+      } else {
+        btnStartRound.textContent = "We win the Round!";
+      }
     } else {
-      btnStartRound.textContent = "They win the Round!";
+      if (max === roundCards[0][3] || max === roundCards[2][3]) {
+        btnStartRound.textContent = "It is a draw!";
+      } else {
+        btnStartRound.textContent = "They win the Round!";
+      }
     }
     btnStartRound.classList.remove("hidden");
   } else {
   }
-};
+}
 
 //PLAYER 1 BUTTONS
 //CARD 1
