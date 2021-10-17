@@ -265,13 +265,19 @@ function playRound() {
       isMyTurn = true;
       break;
     } else {
+      let randomCard = Math.trunc(
+        Math.random() * (roundTurn[roundTurnCounter].length - 1)
+      ); //PLAYS RANDOM CARD FOR NOW
+
       roundCards[roundTurn[roundTurnCounter][3]] =
-        roundTurn[roundTurnCounter][0];
+        roundTurn[roundTurnCounter][randomCard];
+
       PlayCard(
         roundTurn[roundTurnCounter][3],
         roundTurn[roundTurnCounter],
-        Math.trunc(Math.random() * (roundTurn[roundTurnCounter].length - 1))
+        randomCard
       );
+
       if (roundTurnCounter === 3) {
         checkRoundWinner();
       }
