@@ -21,16 +21,41 @@ const player2Card1El = document.querySelector(".player2-card1");
 const player2Card2El = document.querySelector(".player2-card2");
 const player2Card3El = document.querySelector(".player2-card3");
 
+const player2CardsEl = [player2Card1El, player2Card2El, player2Card3El];
+
 //PLAYER 3 ELEMENTS
 const player3Card1El = document.querySelector(".player3-card1");
 const player3Card2El = document.querySelector(".player3-card2");
 const player3Card3El = document.querySelector(".player3-card3");
 
+const player3CardsEl = [player3Card1El, player3Card2El, player3Card3El];
+
 //PLAYER 4 ELEMENTS
 const player4Card1El = document.querySelector(".player4-card1");
 const player4Card2El = document.querySelector(".player4-card2");
 const player4Card3El = document.querySelector(".player4-card3");
+
+const player4CardsEl = [player4Card1El, player4Card2El, player4Card3El];
+
+const playersCardsAllEl = [
+  player1CardsEl,
+  player2CardsEl,
+  player3CardsEl,
+  player4CardsEl,
+];
+
 const playerCardsEl = document.querySelectorAll(".player-card");
+
+//SCORING ELEMENTS
+const roundUs1El = document.querySelector(".round-us-1");
+const roundUs2El = document.querySelector(".round-us-2");
+const roundUs3El = document.querySelector(".round-us-3");
+const roundsUsEl = [roundUs1El, roundUs2El, roundUs3El];
+
+const roundThem1El = document.querySelector(".round-them-1");
+const roundThem2El = document.querySelector(".round-them-2");
+const roundThem3El = document.querySelector(".round-them-3");
+const roundsThemEl = [roundThem1El, roundThem2El, roundThem3El];
 
 //MIDDLE TABLE CARDS (PLAYED CARDS)
 //PLAYER 1
@@ -90,6 +115,7 @@ const cardNumbers = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"];
 const cardSuits = ["diamond", "spade", "heart", "club"];
 let isMyTurn = false;
 const timeDelay = 600;
+let roundNumber = 0;
 
 //FLIPPED AND TRUMP CARDS
 let flippedCard = [];
@@ -107,7 +133,7 @@ let handPlayer4 = [undefined, undefined, undefined, 3];
 
 //ROUND CARDS
 let roundCards = [];
-let roundTurn = [handPlayer4, handPlayer1, handPlayer2, handPlayer3];
+let roundTurn = [handPlayer3, handPlayer4, handPlayer1, handPlayer2];
 let roundTurnCounter = 0;
 
 btnStartRound.addEventListener("click", function () {
@@ -278,6 +304,12 @@ function playRound() {
         randomCard
       );
 
+      //DELETES CARD FROM PLAYERS HAND
+      roundTurn[roundTurnCounter].splice(randomCard, 1);
+      playersCardsAllEl[roundTurn[roundTurnCounter][2]][0].classList.add(
+        "hidden"
+      );
+
       if (roundTurnCounter === 3) {
         checkRoundWinner();
       }
@@ -313,25 +345,44 @@ function checkRoundWinner() {
       if (max === roundCards[1][3] || max === roundCards[3][3]) {
         btnStartRound.textContent = "It is a draw!";
         btnStartRound.style.backgroundColor = "rgba(234, 220, 14, 0.8)";
+
+        if (roundNumber === 0) {
+          roundsUsEl[0].style.backgroundColor = "rgb(234, 220, 14)";
+          roundsThemEl[0].style.backgroundColor = "rgb(234, 220, 14)";
+        }
       } else {
         btnStartRound.textContent = "We win the Round!";
         btnStartRound.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
+
+        if (roundNumber === 0) {
+          roundsUsEl[0].style.backgroundColor = "#00ff00";
+          roundsThemEl[0].style.backgroundColor = "#ff0000";
+        }
       }
     } else {
       if (max === roundCards[0][3] || max === roundCards[2][3]) {
         btnStartRound.textContent = "It is a draw!";
         btnStartRound.style.backgroundColor = "rgba(234, 220, 14, 0.8)";
-        btnStartRound.style.color = "black";
+
+        if (roundNumber === 0) {
+          roundsUsEl[0].style.backgroundColor = "rgb(234, 220, 14)";
+          roundsThemEl[0].style.backgroundColor = "rgb(234, 220, 14)";
+        }
       } else {
         btnStartRound.textContent = "They win the Round!";
         btnStartRound.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
+
+        if (roundNumber === 0) {
+          roundsUsEl[0].style.backgroundColor = "#ff0000";
+          roundsThemEl[0].style.backgroundColor = "#00ff00";
+        }
       }
     }
     btnStartRound.classList.remove("hidden");
 
     setTimeout(function () {
-      btnStartRound.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-      btnStartRound.textContent = "Play next Round";
+      // btnStartRound.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+      // btnStartRound.textContent = "Play next Round";
     }, timeDelay * 2);
     //CHANGE THE ORDER OF PLAY FOR THE NEXT ROUND
     [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
@@ -340,7 +391,7 @@ function checkRoundWinner() {
       roundTurn[3],
       roundTurn[0],
     ];
-    console.log(roundTurn);
+    // console.log(roundTurn);
   }
 }
 
@@ -351,6 +402,8 @@ for (let i = 0; i < player1CardsEl.length; i++) {
       roundCards[0] = handPlayer1[i];
       PlayCard(0, handPlayer1, i);
       player1CardsEl[i].classList.add("hidden");
+      roundTurn[roundTurnCounter].splice(i, 1);
+
       if (roundTurn[3] === handPlayer1) {
         checkRoundWinner();
       } else {
