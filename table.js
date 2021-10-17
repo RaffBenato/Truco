@@ -267,7 +267,11 @@ function playRound() {
     } else {
       roundCards[roundTurn[roundTurnCounter][3]] =
         roundTurn[roundTurnCounter][0];
-      PlayCard(roundTurn[roundTurnCounter][3], roundTurn[roundTurnCounter], 0);
+      PlayCard(
+        roundTurn[roundTurnCounter][3],
+        roundTurn[roundTurnCounter],
+        Math.trunc(Math.random() * (roundTurn[roundTurnCounter].length - 1))
+      );
       if (roundTurnCounter === 3) {
         checkRoundWinner();
       }
@@ -342,9 +346,7 @@ for (let i = 0; i < player1CardsEl.length; i++) {
       PlayCard(0, handPlayer1, i);
       player1CardsEl[i].classList.add("hidden");
       if (roundTurn[3] === handPlayer1) {
-        setTimeout(function () {
-          checkRoundWinner();
-        }, timeDelay);
+        checkRoundWinner();
       } else {
         isMyTurn = false;
         roundTurnCounter++;
@@ -356,3 +358,7 @@ for (let i = 0; i < player1CardsEl.length; i++) {
 
 //ON LOAD
 window.onload = function () {};
+
+function addDelay(time) {
+  setTimeout(function () {}, time);
+}
