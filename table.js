@@ -107,7 +107,8 @@ let handPlayer4 = [undefined, undefined, undefined, 3];
 
 //ROUND CARDS
 let roundCards = [];
-let roundTurn = [handPlayer1, handPlayer2, handPlayer3, handPlayer4];
+let roundTurn = [handPlayer4, handPlayer1, handPlayer2, handPlayer3];
+let roundTurnCounter = 0;
 
 btnStartRound.addEventListener("click", function () {
   //STARTS ROUND
@@ -252,39 +253,25 @@ function ChangeTrumpPower() {
     }
   }
 }
-// IMPORTANT
+
 //PLAYING A ROUND
 function playRound() {
-  if (roundTurn[0] === handPlayer1) {
-    isMyTurn = true;
-  } else {
-    simulateRound();
-  }
-}
-
-//SIMULATING THE OTHER PLAYERS ROUND
-function simulateRound() {
-  if (!isMyTurn === true) {
-    const timeDelay = 600;
-    setTimeout(function () {
-      roundCards[1] = handPlayer2[0];
-      PlayCard(handPlayer2[3], handPlayer2, 0);
-
-      setTimeout(function () {
-        roundCards[2] = handPlayer3[0];
-        PlayCard(handPlayer3[3], handPlayer3, 0);
-
-        setTimeout(function () {
-          roundCards[3] = handPlayer4[0];
-          PlayCard(handPlayer4[3], handPlayer4, 0);
-
-          setTimeout(function () {
-            isMyTurn = true;
-            checkRoundWinner();
-          }, timeDelay);
-        }, timeDelay);
-      }, timeDelay);
-    }, timeDelay);
+  for (
+    roundTurnCounter = roundTurnCounter;
+    roundTurnCounter < roundTurn.length;
+    roundTurnCounter++
+  ) {
+    if (roundTurn[roundTurnCounter] === handPlayer1) {
+      isMyTurn = true;
+      break;
+    } else {
+      roundCards[roundTurn[roundTurnCounter][3]] =
+        roundTurn[roundTurnCounter][0];
+      PlayCard(roundTurn[roundTurnCounter][3], roundTurn[roundTurnCounter], 0);
+      if (roundTurnCounter === 3) {
+        checkRoundWinner();
+      }
+    }
   }
 }
 
@@ -298,8 +285,6 @@ function PlayCard(position, whichPlayer, whichCard) {
   positionNumbersEl[position][0].textContent = whichPlayer[whichCard][1];
   positionNumbersEl[position][1].textContent = whichPlayer[whichCard][1];
 }
-
-// IMPORTANT
 
 //CHECKS THE ROUND WINNER
 function checkRoundWinner() {
@@ -362,7 +347,8 @@ for (let i = 0; i < player1CardsEl.length; i++) {
         }, timeDelay);
       } else {
         isMyTurn = false;
-        simulateRound();
+        roundTurnCounter++;
+        playRound();
       }
     }
   });
