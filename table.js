@@ -262,31 +262,31 @@ function playRound() {
   }
 }
 
-//SIMULATING THE OTHER PLAYERS ROUND
-function simulateRound() {
-  if (!isMyTurn === true) {
-    const timeDelay = 600;
-    setTimeout(function () {
-      roundCards[1] = handPlayer2[0];
-      PlayCard(1, handPlayer2, 0);
+// //SIMULATING THE OTHER PLAYERS ROUND
+// function simulateRound() {
+//   if (!isMyTurn === true) {
+//     const timeDelay = 600;
+//     setTimeout(function () {
+//       roundCards[1] = handPlayer2[0];
+//       PlayCard(1, handPlayer2, 0);
 
-      setTimeout(function () {
-        roundCards[2] = handPlayer3[0];
-        PlayCard(2, handPlayer3, 0);
+//       setTimeout(function () {
+//         roundCards[2] = handPlayer3[0];
+//         PlayCard(2, handPlayer3, 0);
 
-        setTimeout(function () {
-          roundCards[3] = handPlayer4[0];
-          PlayCard(3, handPlayer4, 0);
+//         setTimeout(function () {
+//           roundCards[3] = handPlayer4[0];
+//           PlayCard(3, handPlayer4, 0);
 
-          setTimeout(function () {
-            isMyTurn = true;
-            checkRoundWinner();
-          }, timeDelay);
-        }, timeDelay);
-      }, timeDelay);
-    }, timeDelay);
-  }
-}
+//           setTimeout(function () {
+//             isMyTurn = true;
+//             checkRoundWinner();
+//           }, timeDelay);
+//         }, timeDelay);
+//       }, timeDelay);
+//     }, timeDelay);
+//   }
+// }
 
 //PLAY CARD
 function PlayCard(position, whichPlayer, whichCard) {
