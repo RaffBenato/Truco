@@ -100,10 +100,10 @@ let power;
 let trumpCards = [];
 
 //PLAYERS
-let handPlayer1 = [];
-let handPlayer2 = [];
-let handPlayer3 = [];
-let handPlayer4 = [];
+let handPlayer1 = [undefined, undefined, undefined, 0];
+let handPlayer2 = [undefined, undefined, undefined, 1];
+let handPlayer3 = [undefined, undefined, undefined, 2];
+let handPlayer4 = [undefined, undefined, undefined, 3];
 
 //ROUND CARDS
 let roundCards = [];
@@ -262,31 +262,31 @@ function playRound() {
   }
 }
 
-// //SIMULATING THE OTHER PLAYERS ROUND
-// function simulateRound() {
-//   if (!isMyTurn === true) {
-//     const timeDelay = 600;
-//     setTimeout(function () {
-//       roundCards[1] = handPlayer2[0];
-//       PlayCard(1, handPlayer2, 0);
+//SIMULATING THE OTHER PLAYERS ROUND
+function simulateRound() {
+  if (!isMyTurn === true) {
+    const timeDelay = 600;
+    setTimeout(function () {
+      roundCards[1] = handPlayer2[0];
+      PlayCard(handPlayer2[3], handPlayer2, 0);
 
-//       setTimeout(function () {
-//         roundCards[2] = handPlayer3[0];
-//         PlayCard(2, handPlayer3, 0);
+      setTimeout(function () {
+        roundCards[2] = handPlayer3[0];
+        PlayCard(handPlayer3[3], handPlayer3, 0);
 
-//         setTimeout(function () {
-//           roundCards[3] = handPlayer4[0];
-//           PlayCard(3, handPlayer4, 0);
+        setTimeout(function () {
+          roundCards[3] = handPlayer4[0];
+          PlayCard(handPlayer4[3], handPlayer4, 0);
 
-//           setTimeout(function () {
-//             isMyTurn = true;
-//             checkRoundWinner();
-//           }, timeDelay);
-//         }, timeDelay);
-//       }, timeDelay);
-//     }, timeDelay);
-//   }
-// }
+          setTimeout(function () {
+            isMyTurn = true;
+            checkRoundWinner();
+          }, timeDelay);
+        }, timeDelay);
+      }, timeDelay);
+    }, timeDelay);
+  }
+}
 
 //PLAY CARD
 function PlayCard(position, whichPlayer, whichCard) {
