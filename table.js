@@ -1,6 +1,9 @@
 "use strict";
 
 const btnStartRound = document.querySelector(".btn-start");
+const btnNextRound = document.querySelector(".btn-next-round");
+const messageEl = document.querySelector(".message");
+
 //PLAYER 1 ELEMENTS
 const player1Card1El = document.querySelector(".player1-card1");
 const player1Card1NumberEl = document.querySelectorAll(".player1-card1-number");
@@ -133,7 +136,7 @@ let handPlayer4 = [undefined, undefined, undefined, 3];
 
 //ROUND CARDS
 let roundCards = [];
-let roundTurn = [handPlayer3, handPlayer4, handPlayer1, handPlayer2];
+let roundTurn = [handPlayer1, handPlayer2, handPlayer3, handPlayer4];
 let roundTurnCounter = 0;
 
 btnStartRound.addEventListener("click", function () {
@@ -330,69 +333,101 @@ function PlayCard(position, whichPlayer, whichCard) {
 
 //CHECKS THE ROUND WINNER
 function checkRoundWinner() {
-  if (!roundCards.includes(undefined)) {
-    let max = 0;
-    let i = 0;
-    let roundWinner;
-    for (i = 0; i < roundCards.length; i++) {
-      if (roundCards[i][3] > max) {
-        max = roundCards[i][3];
-        roundWinner = i;
-      }
+  let max = 0;
+  let i = 0;
+  let roundWinner;
+  for (i = 0; i < roundCards.length; i++) {
+    if (roundCards[i][3] > max) {
+      max = roundCards[i][3];
+      roundWinner = i;
     }
+  }
 
-    if (roundWinner + 1 === 1 || roundWinner + 1 === 3) {
-      if (max === roundCards[1][3] || max === roundCards[3][3]) {
-        btnStartRound.textContent = "It is a draw!";
-        btnStartRound.style.backgroundColor = "rgba(234, 220, 14, 0.8)";
+  //CHANGE THE ORDER OF PLAY FOR THE NEXT ROUND
 
-        if (roundNumber === 0) {
-          roundsUsEl[0].style.backgroundColor = "rgb(234, 220, 14)";
-          roundsThemEl[0].style.backgroundColor = "rgb(234, 220, 14)";
-        }
-      } else {
-        btnStartRound.textContent = "We win the Round!";
-        btnStartRound.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
+  switch (roundWinner) {
+    case 0:
+      [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
+        handPlayer1,
+        handPlayer2,
+        handPlayer3,
+        handPlayer4,
+      ];
+      break;
+    case 1:
+      [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
+        handPlayer2,
+        handPlayer3,
+        handPlayer4,
+        handPlayer1,
+      ];
+      break;
+    case 2:
+      [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
+        handPlayer3,
+        handPlayer4,
+        handPlayer1,
+        handPlayer2,
+      ];
+      break;
+    case 3:
+      [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
+        handPlayer4,
+        handPlayer1,
+        handPlayer2,
+        handPlayer3,
+      ];
+      break;
+  }
 
-        if (roundNumber === 0) {
-          roundsUsEl[0].style.backgroundColor = "#00ff00";
-          roundsThemEl[0].style.backgroundColor = "#ff0000";
-        }
+  console.log(roundTurn);
+
+  if (roundWinner + 1 === 1 || roundWinner + 1 === 3) {
+    if (max === roundCards[1][3] || max === roundCards[3][3]) {
+      showRoundWinner("draw");
+    } else {
+      showRoundWinner("us");
+    }
+  } else {
+    if (max === roundCards[0][3] || max === roundCards[2][3]) {
+      showRoundWinner("draw");
+    } else {
+      showRoundWinner("them");
+    }
+  }
+
+  function showRoundWinner(whoWon) {
+    if (whoWon === "us") {
+      messageEl.textContent = "We win the Round!";
+      messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
+
+      if (roundNumber === 0) {
+        roundsUsEl[0].style.backgroundColor = "#00ff00";
+        roundsThemEl[0].style.backgroundColor = "#ff0000";
+      }
+    } else if (whoWon === "them") {
+      messageEl.textContent = "They win the Round!";
+      messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
+
+      if (roundNumber === 0) {
+        roundsUsEl[0].style.backgroundColor = "#ff0000";
+        roundsThemEl[0].style.backgroundColor = "#00ff00";
       }
     } else {
-      if (max === roundCards[0][3] || max === roundCards[2][3]) {
-        btnStartRound.textContent = "It is a draw!";
-        btnStartRound.style.backgroundColor = "rgba(234, 220, 14, 0.8)";
+      messageEl.textContent = "It is a draw!";
+      messageEl.style.backgroundColor = "rgba(234, 220, 14, 0.8)";
 
-        if (roundNumber === 0) {
-          roundsUsEl[0].style.backgroundColor = "rgb(234, 220, 14)";
-          roundsThemEl[0].style.backgroundColor = "rgb(234, 220, 14)";
-        }
-      } else {
-        btnStartRound.textContent = "They win the Round!";
-        btnStartRound.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
-
-        if (roundNumber === 0) {
-          roundsUsEl[0].style.backgroundColor = "#ff0000";
-          roundsThemEl[0].style.backgroundColor = "#00ff00";
-        }
+      if (roundNumber === 0) {
+        roundsUsEl[0].style.backgroundColor = "rgb(234, 220, 14)";
+        roundsThemEl[0].style.backgroundColor = "rgb(234, 220, 14)";
       }
     }
-    btnStartRound.classList.remove("hidden");
-
-    setTimeout(function () {
-      // btnStartRound.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-      // btnStartRound.textContent = "Play next Round";
-    }, timeDelay * 2);
-    //CHANGE THE ORDER OF PLAY FOR THE NEXT ROUND
-    [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
-      roundTurn[1],
-      roundTurn[2],
-      roundTurn[3],
-      roundTurn[0],
-    ];
-    // console.log(roundTurn);
   }
+
+  messageEl.classList.remove("hidden");
+  setTimeout(function () {
+    btnNextRound.classList.remove("hidden");
+  }, timeDelay * 2);
 }
 
 //PLAYER 1 BUTTONS

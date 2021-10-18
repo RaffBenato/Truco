@@ -234,7 +234,9 @@ body {
     z-index: -1;
   }
 
-  .btn-start {
+  .btn-start,
+  .message,
+  .btn-next-round {
     position: absolute;
     top: 45%;
     left: 50%;
@@ -247,7 +249,22 @@ body {
     font-size: 30px;
     border-radius: 15px;
     border: white 3px solid;
+    font-family: sans-serif;
+    text-align: center;
+  }
+
+  .btn-next-round {
+    top: 50%;
     cursor: pointer;
+  }
+
+  .btn-start {
+    cursor: pointer;
+  }
+
+  .message {
+    top: 30%;
+    padding-top: 30px;
   }
 
   .top {
