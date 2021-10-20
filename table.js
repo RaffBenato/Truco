@@ -197,6 +197,11 @@ btnStartRound.addEventListener("click", function () {
   playRound();
 });
 
+btnNextRound.addEventListener("click", function () {
+  messageEl.classList.add("hidden");
+  btnNextRound.classList.add("hidden");
+});
+
 //CREATES THE DECK OF CARDS
 function createDeck() {
   let p = 1;
