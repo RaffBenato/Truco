@@ -421,26 +421,20 @@ function checkRoundWinner() {
       messageEl.textContent = "We win the Round!";
       messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
 
-      if (roundNumber === 0) {
-        roundsUsEl[0].style.backgroundColor = "#00ff00";
-        roundsThemEl[0].style.backgroundColor = "#ff0000";
-      }
+      roundsUsEl[roundNumber].style.backgroundColor = "#00ff00";
+      roundsThemEl[roundNumber].style.backgroundColor = "#ff0000";
     } else if (whoWon === "them") {
       messageEl.textContent = "They win the Round!";
       messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
 
-      if (roundNumber === 0) {
-        roundsUsEl[0].style.backgroundColor = "#ff0000";
-        roundsThemEl[0].style.backgroundColor = "#00ff00";
-      }
+      roundsUsEl[roundNumber].style.backgroundColor = "#ff0000";
+      roundsThemEl[roundNumber].style.backgroundColor = "#00ff00";
     } else {
       messageEl.textContent = "It is a draw!";
       messageEl.style.backgroundColor = "rgba(234, 220, 14, 0.8)";
 
-      if (roundNumber === 0) {
-        roundsUsEl[0].style.backgroundColor = "rgb(234, 220, 14)";
-        roundsThemEl[0].style.backgroundColor = "rgb(234, 220, 14)";
-      }
+      roundsUsEl[roundNumber].style.backgroundColor = "rgb(234, 220, 14)";
+      roundsThemEl[roundNumber].style.backgroundColor = "rgb(234, 220, 14)";
     }
   }
 
