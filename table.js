@@ -119,6 +119,7 @@ const cardSuits = ["diamond", "spade", "heart", "club"];
 let isMyTurn = false;
 const timeDelay = 600;
 let roundNumber = 0;
+let randomCard;
 
 //FLIPPED AND TRUMP CARDS
 let flippedCard = [];
@@ -201,11 +202,19 @@ btnStartRound.addEventListener("click", function () {
 //NEXT ROUND/////////
 
 btnNextRound.addEventListener("click", function () {
-  for (let i = 0; i < positionOfCardsEl.length; i++)
+  for (let i = 0; i < positionOfCardsEl.length; i++) {
     positionOfCardsEl[i].classList.add("hidden");
-
+    positionOfCardsEl[i].classList.remove(`card-diamond`);
+    positionOfCardsEl[i].classList.remove(`card-heart`);
+    positionOfCardsEl[i].classList.remove(`card-spade`);
+    positionOfCardsEl[i].classList.remove(`card-club`);
+  }
   messageEl.classList.add("hidden");
   btnNextRound.classList.add("hidden");
+
+  roundTurnCounter = 0;
+  roundNumber++;
+  playRound();
 });
 
 //CREATES THE DECK OF CARDS
@@ -305,24 +314,24 @@ function playRound() {
       isMyTurn = true;
       break;
     } else {
-      let randomCard = Math.trunc(
+      randomCard = Math.trunc(
         Math.random() * (roundTurn[roundTurnCounter].length - 1)
       ); //PLAYS RANDOM CARD FOR NOW
-
-      roundCards[roundTurn[roundTurnCounter][3]] =
-        roundTurn[roundTurnCounter][randomCard];
+      roundCards[
+        roundTurn[roundTurnCounter][roundTurn[roundTurnCounter].length - 1]
+      ] = roundTurn[roundTurnCounter][randomCard];
 
       PlayCard(
-        roundTurn[roundTurnCounter][3],
+        roundTurn[roundTurnCounter][roundTurn[roundTurnCounter].length - 1],
         roundTurn[roundTurnCounter],
         randomCard
       );
 
       //DELETES CARD FROM PLAYERS HAND
       roundTurn[roundTurnCounter].splice(randomCard, 1);
-      playersCardsAllEl[roundTurn[roundTurnCounter][2]][0].classList.add(
-        "hidden"
-      );
+      playersCardsAllEl[
+        roundTurn[roundTurnCounter][roundTurn[roundTurnCounter].length - 1]
+      ][roundNumber].classList.add("hidden");
 
       if (roundTurnCounter === 3) {
         checkRoundWinner();
@@ -448,7 +457,6 @@ for (let i = 0; i < player1CardsEl.length; i++) {
       roundCards[0] = handPlayer1[i];
       PlayCard(0, handPlayer1, i);
       player1CardsEl[i].classList.add("hidden");
-      roundTurn[roundTurnCounter].splice(i, 1);
 
       if (roundTurn[3] === handPlayer1) {
         checkRoundWinner();
