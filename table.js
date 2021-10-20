@@ -197,7 +197,13 @@ btnStartRound.addEventListener("click", function () {
   playRound();
 });
 
+/////////////////////
+//NEXT ROUND/////////
+
 btnNextRound.addEventListener("click", function () {
+  for (let i = 0; i < positionOfCardsEl.length; i++)
+    positionOfCardsEl[i].classList.add("hidden");
+
   messageEl.classList.add("hidden");
   btnNextRound.classList.add("hidden");
 });
