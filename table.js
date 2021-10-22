@@ -2,6 +2,7 @@
 
 const btnStartRound = document.querySelector(".btn-start");
 const btnNextRound = document.querySelector(".btn-next-round");
+const btnNextHand = document.querySelector(".btn-next-hand");
 const messageEl = document.querySelector(".message");
 
 //PLAYER 1 ELEMENTS
@@ -201,7 +202,6 @@ btnStartRound.addEventListener("click", function () {
 
 /////////////////////
 //NEXT ROUND/////////
-
 btnNextRound.addEventListener("click", function () {
   for (let i = 0; i < positionOfCardsEl.length; i++) {
     positionOfCardsEl[i].classList.add("hidden");
@@ -216,6 +216,22 @@ btnNextRound.addEventListener("click", function () {
   roundTurnCounter = 0;
   roundNumber++;
   playRound();
+});
+
+/////////////////////
+//NEXT HAND/////////
+btnNextHand.addEventListener("click", function () {
+  for (let i = 0; i < positionOfCardsEl.length; i++) {
+    positionOfCardsEl[i].classList.add("hidden");
+    positionOfCardsEl[i].classList.remove(`card-diamond`);
+    positionOfCardsEl[i].classList.remove(`card-heart`);
+    positionOfCardsEl[i].classList.remove(`card-spade`);
+    positionOfCardsEl[i].classList.remove(`card-club`);
+
+    mountFlipCardEl.classList.add("hidden");
+  }
+  messageEl.classList.add("hidden");
+  btnNextHand.classList.add("hidden");
 });
 
 //CREATES THE DECK OF CARDS
@@ -441,11 +457,14 @@ function checkRoundWinner() {
       roundsThemEl[roundNumber].style.backgroundColor = "rgb(234, 220, 14)";
     }
 
+    //////////////////////////////////
+    // LOGIC FOR CHECKING HAND WINNER
     if (roundNumber === 1) {
       if (whoWon === "us") {
         if (roundWinTracker[0] === "draw" || roundWinTracker[0] === "us") {
           setTimeout(function () {
             messageEl.textContent = "We win the Hand!";
+            btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
         } else {
           setTimeout(function () {
@@ -456,6 +475,7 @@ function checkRoundWinner() {
         if (roundWinTracker[0] === "draw" || roundWinTracker[0] === "them") {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
+            btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
         } else {
           setTimeout(function () {
@@ -467,11 +487,13 @@ function checkRoundWinner() {
           setTimeout(function () {
             messageEl.textContent = "We win the Hand!";
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
+            btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
         } else if (whoWon === "them") {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
+            btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
         } else {
           let twoDraws = true;
@@ -490,6 +512,7 @@ function checkRoundWinner() {
           setTimeout(function () {
             messageEl.textContent = "We win the Hand!";
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
+            btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
         }
       } else if (whoWon === "them") {
@@ -501,6 +524,7 @@ function checkRoundWinner() {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
+            btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
         }
       } else {
@@ -508,16 +532,19 @@ function checkRoundWinner() {
           setTimeout(function () {
             messageEl.textContent = "We win the Hand!";
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
+            btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
         } else if (roundWinTracker[0] === "them") {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
+            btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
         } else {
           setTimeout(function () {
             messageEl.textContent = "Nobody wins the Hand";
             messageEl.style.backgroundColor = "rgba(234, 220, 14, 0.8)";
+            btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
         }
       }

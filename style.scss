@@ -113,7 +113,7 @@ body {
       position: absolute;
       top: 0.2rem;
       right: 1rem;
-      font-size: 5rem;
+      font-size: 3rem;
       color: #333;
       cursor: pointer;
       border: none;
@@ -236,7 +236,8 @@ body {
 
   .btn-start,
   .message,
-  .btn-next-round {
+  .btn-next-round,
+  .btn-next-hand {
     position: absolute;
     top: 45%;
     left: 50%;
@@ -253,7 +254,8 @@ body {
     text-align: center;
   }
 
-  .btn-next-round {
+  .btn-next-round,
+  .btn-next-hand {
     top: 50%;
     cursor: pointer;
   }
