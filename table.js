@@ -189,17 +189,53 @@ btnNextHand.addEventListener("click", function () {
     positionOfCardsEl[i].classList.remove(`card-spade`);
     positionOfCardsEl[i].classList.remove(`card-club`);
     playersCardsAllEl[i][2].classList.add("hidden");
+
+    playersCardsAllEl[0][i]?.classList.remove(`card-diamond`);
+    playersCardsAllEl[0][i]?.classList.remove(`card-heart`);
+    playersCardsAllEl[0][i]?.classList.remove(`card-spade`);
+    playersCardsAllEl[0][i]?.classList.remove(`card-club`);
     playersCardsAllEl[0][i]?.classList.add("hidden");
     if (i < 3) {
       roundsUsEl[i].style.backgroundColor = "rgba(141, 140, 140, 0.3)";
       roundsThemEl[i].style.backgroundColor = "rgba(141, 140, 140, 0.3)";
     }
+    trumpNumbersEl[i].textContent = "";
+    trumpSuitInfoEl[i].classList.add("hidden");
   }
-  mountFlipCardEl.classList.add(`card-${flippedSuit}`);
+  trumpNumbersEl[2].textContent = "TRUMP CARDS";
+  mountFlipCardEl.classList.remove(`card-${flippedSuit}`);
   mountFlipCardEl.classList.add("hidden");
 
   messageEl.classList.add("hidden");
   btnNextHand.classList.add("hidden");
+
+  //SETTING UP THE NEW HAND
+  roundNumber = 0;
+  roundTurnCounter = 0;
+  roundWinTracker = [undefined, undefined, undefined];
+  handOutIndex = 0;
+
+  roundTurn = [handPlayer1, handPlayer2, handPlayer3, handPlayer4];
+  trumpCards.length = 0;
+
+  handPlayer1 = [undefined, undefined, undefined, 0];
+  handPlayer2 = [undefined, undefined, undefined, 1];
+  handPlayer3 = [undefined, undefined, undefined, 2];
+  handPlayer4 = [undefined, undefined, undefined, 3];
+
+  deck.length = 0;
+  createDeck();
+  shuffle(deck);
+  handOutCards(handPlayer1);
+  handOutCards(handPlayer2);
+  handOutCards(handPlayer3);
+  handOutCards(handPlayer4);
+  flipCard();
+  findsTrump();
+  ChangeTrumpPower();
+  setUpCards();
+
+  roundTurnCounter = 0;
 });
 
 //CREATES THE DECK OF CARDS
@@ -324,6 +360,7 @@ function setUpCards() {
     playerCardsEl[i].classList.remove("hidden");
   }
 }
+
 //PLAYING A ROUND
 function playRound() {
   for (
@@ -491,7 +528,7 @@ function checkRoundWinner() {
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
             btnNextHand.classList.remove("hidden");
           }, timeDelay * 2);
-        } else if (whoWon === "them") {
+        } else if (roundWinTracker[0] === "them") {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
