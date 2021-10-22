@@ -153,49 +153,9 @@ btnStartRound.addEventListener("click", function () {
   flipCard();
   findsTrump();
   ChangeTrumpPower();
-
-  //TO BE DELETED
-  console.log(handPlayer1);
-  console.log(handPlayer2);
-  console.log(handPlayer3);
-  console.log(handPlayer4);
+  setUpCards();
 
   btnStartRound.classList.add("hidden");
-
-  //SETTING UP THE FLIPPED CARD
-  mountFlipCardEl.classList.add(`card-${flippedSuit}`);
-  mountFlipCardSuitEl.src = `img/${flippedSuit}.png`;
-  mountFlipCardNumberEl.textContent = flippedNumber;
-  mountFlipCardEl.classList.remove("hidden");
-
-  //SETTING UP THE TRUMP CARD NUMBERS
-  for (let i = 0; i < 4; i++) {
-    trumpNumbersEl[i].textContent = trumpCards[i][1];
-    trumpSuitInfoEl[i].classList.remove("hidden");
-  }
-
-  //SETTING UP PLAYER 1 CARD 1
-  player1Card1El.classList.add(`card-${handPlayer1[0][2]}`);
-  player1Card1SuitEl.src = `img/${handPlayer1[0][2]}.png`;
-  player1Card1NumberEl[0].textContent = handPlayer1[0][1];
-  player1Card1NumberEl[1].textContent = handPlayer1[0][1];
-
-  //SETTING UP PLAYER 1 CARD 2
-  player1Card2El.classList.add(`card-${handPlayer1[1][2]}`);
-  player1Card2SuitEl.src = `img/${handPlayer1[1][2]}.png`;
-  player1Card2NumberEl[0].textContent = handPlayer1[1][1];
-  player1Card2NumberEl[1].textContent = handPlayer1[1][1];
-
-  //SETTING UP PLAYER 1 CARD 3
-  player1Card3El.classList.add(`card-${handPlayer1[2][2]}`);
-  player1Card3SuitEl.src = `img/${handPlayer1[2][2]}.png`;
-  player1Card3NumberEl[0].textContent = handPlayer1[2][1];
-  player1Card3NumberEl[1].textContent = handPlayer1[2][1];
-
-  // DISPLAY CARDS
-  for (let i = 0; i < playerCardsEl.length; i++) {
-    playerCardsEl[i].classList.remove("hidden");
-  }
 
   playRound();
 });
@@ -221,12 +181,19 @@ btnNextRound.addEventListener("click", function () {
 /////////////////////
 //NEXT HAND/////////
 btnNextHand.addEventListener("click", function () {
+  // CLEAR UP CARDS FROM TABLE
   for (let i = 0; i < positionOfCardsEl.length; i++) {
     positionOfCardsEl[i].classList.add("hidden");
     positionOfCardsEl[i].classList.remove(`card-diamond`);
     positionOfCardsEl[i].classList.remove(`card-heart`);
     positionOfCardsEl[i].classList.remove(`card-spade`);
     positionOfCardsEl[i].classList.remove(`card-club`);
+    playersCardsAllEl[i][2].classList.add("hidden");
+    playersCardsAllEl[0][i]?.classList.add("hidden");
+    if (i < 3) {
+      roundsUsEl[i].style.backgroundColor = "rgba(141, 140, 140, 0.3)";
+      roundsThemEl[i].style.backgroundColor = "rgba(141, 140, 140, 0.3)";
+    }
   }
   mountFlipCardEl.classList.add(`card-${flippedSuit}`);
   mountFlipCardEl.classList.add("hidden");
@@ -321,6 +288,42 @@ function ChangeTrumpPower() {
   }
 }
 
+function setUpCards() {
+  //SETTING UP THE FLIPPED CARD
+  mountFlipCardEl.classList.add(`card-${flippedSuit}`);
+  mountFlipCardSuitEl.src = `img/${flippedSuit}.png`;
+  mountFlipCardNumberEl.textContent = flippedNumber;
+  mountFlipCardEl.classList.remove("hidden");
+
+  //SETTING UP THE TRUMP CARD NUMBERS
+  for (let i = 0; i < 4; i++) {
+    trumpNumbersEl[i].textContent = trumpCards[i][1];
+    trumpSuitInfoEl[i].classList.remove("hidden");
+  }
+
+  //SETTING UP PLAYER 1 CARD 1
+  player1Card1El.classList.add(`card-${handPlayer1[0][2]}`);
+  player1Card1SuitEl.src = `img/${handPlayer1[0][2]}.png`;
+  player1Card1NumberEl[0].textContent = handPlayer1[0][1];
+  player1Card1NumberEl[1].textContent = handPlayer1[0][1];
+
+  //SETTING UP PLAYER 1 CARD 2
+  player1Card2El.classList.add(`card-${handPlayer1[1][2]}`);
+  player1Card2SuitEl.src = `img/${handPlayer1[1][2]}.png`;
+  player1Card2NumberEl[0].textContent = handPlayer1[1][1];
+  player1Card2NumberEl[1].textContent = handPlayer1[1][1];
+
+  //SETTING UP PLAYER 1 CARD 3
+  player1Card3El.classList.add(`card-${handPlayer1[2][2]}`);
+  player1Card3SuitEl.src = `img/${handPlayer1[2][2]}.png`;
+  player1Card3NumberEl[0].textContent = handPlayer1[2][1];
+  player1Card3NumberEl[1].textContent = handPlayer1[2][1];
+
+  // DISPLAY CARDS
+  for (let i = 0; i < playerCardsEl.length; i++) {
+    playerCardsEl[i].classList.remove("hidden");
+  }
+}
 //PLAYING A ROUND
 function playRound() {
   for (
@@ -417,8 +420,6 @@ function checkRoundWinner() {
       ];
       break;
   }
-
-  console.log(roundTurn);
 
   if (roundWinner + 1 === 1 || roundWinner + 1 === 3) {
     if (max === roundCards[1][3] || max === roundCards[3][3]) {
