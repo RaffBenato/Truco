@@ -227,9 +227,10 @@ btnNextHand.addEventListener("click", function () {
     positionOfCardsEl[i].classList.remove(`card-heart`);
     positionOfCardsEl[i].classList.remove(`card-spade`);
     positionOfCardsEl[i].classList.remove(`card-club`);
-
-    mountFlipCardEl.classList.add("hidden");
   }
+  mountFlipCardEl.classList.add(`card-${flippedSuit}`);
+  mountFlipCardEl.classList.add("hidden");
+
   messageEl.classList.add("hidden");
   btnNextHand.classList.add("hidden");
 });
