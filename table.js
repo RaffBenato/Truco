@@ -215,13 +215,13 @@ btnNextHand.addEventListener("click", function () {
   roundWinTracker = [undefined, undefined, undefined];
   handOutIndex = 0;
 
-  roundTurn = [handPlayer1, handPlayer2, handPlayer3, handPlayer4];
   trumpCards.length = 0;
 
   handPlayer1 = [undefined, undefined, undefined, 0];
   handPlayer2 = [undefined, undefined, undefined, 1];
   handPlayer3 = [undefined, undefined, undefined, 2];
   handPlayer4 = [undefined, undefined, undefined, 3];
+  roundTurn = [handPlayer1, handPlayer2, handPlayer3, handPlayer4];
 
   deck.length = 0;
   createDeck();
@@ -235,7 +235,12 @@ btnNextHand.addEventListener("click", function () {
   ChangeTrumpPower();
   setUpCards();
 
+  console.log(handPlayer1);
+  console.log(handPlayer2);
+  console.log(handPlayer3);
+  console.log(handPlayer4);
   roundTurnCounter = 0;
+  playRound();
 });
 
 //CREATES THE DECK OF CARDS
