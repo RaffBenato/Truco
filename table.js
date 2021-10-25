@@ -64,6 +64,9 @@ const roundsThemEl = [roundThem1El, roundThem2El, roundThem3El];
 const pointsUsEl = document.querySelectorAll(".point-us");
 const pointsThemEl = document.querySelectorAll(".point-them");
 
+const usTotalEl = document.querySelector(".us-total");
+const themTotalEl = document.querySelector(".them-total");
+
 //MIDDLE TABLE CARDS (PLAYED CARDS)
 //PLAYER 1
 const positionBottomEl = document.querySelector(".position-bottom");
@@ -126,6 +129,7 @@ let roundNumber = 0;
 let randomCard;
 let roundWinTracker = [undefined, undefined, undefined];
 let handWinnerTracker = [0, 0];
+let handCounter = 0;
 
 //FLIPPED AND TRUMP CARDS
 let flippedCard = [];
@@ -544,6 +548,7 @@ function checkRoundWinner() {
           setTimeout(function () {
             messageEl.textContent = "We win the Hand!";
             btnNextHand.classList.remove("hidden");
+            scoreHandWinner("us");
           }, timeDelay * 2);
         } else {
           setTimeout(function () {
@@ -555,6 +560,7 @@ function checkRoundWinner() {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             btnNextHand.classList.remove("hidden");
+            scoreHandWinner("them");
           }, timeDelay * 2);
         } else {
           setTimeout(function () {
@@ -567,12 +573,14 @@ function checkRoundWinner() {
             messageEl.textContent = "We win the Hand!";
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
             btnNextHand.classList.remove("hidden");
+            scoreHandWinner("us");
           }, timeDelay * 2);
         } else if (roundWinTracker[0] === "them") {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
             btnNextHand.classList.remove("hidden");
+            scoreHandWinner("them");
           }, timeDelay * 2);
         } else {
           let twoDraws = true;
@@ -592,6 +600,7 @@ function checkRoundWinner() {
             messageEl.textContent = "We win the Hand!";
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
             btnNextHand.classList.remove("hidden");
+            scoreHandWinner("us");
           }, timeDelay * 2);
         }
       } else if (whoWon === "them") {
@@ -604,6 +613,7 @@ function checkRoundWinner() {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
             btnNextHand.classList.remove("hidden");
+            scoreHandWinner("them");
           }, timeDelay * 2);
         }
       } else {
@@ -612,12 +622,14 @@ function checkRoundWinner() {
             messageEl.textContent = "We win the Hand!";
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
             btnNextHand.classList.remove("hidden");
+            scoreHandWinner("us");
           }, timeDelay * 2);
         } else if (roundWinTracker[0] === "them") {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
             btnNextHand.classList.remove("hidden");
+            scoreHandWinner("them");
           }, timeDelay * 2);
         } else {
           setTimeout(function () {
@@ -635,6 +647,22 @@ function checkRoundWinner() {
   }
 
   messageEl.classList.remove("hidden");
+}
+
+function scoreHandWinner(whoWon) {
+  if (whoWon === "us") {
+    pointsUsEl[handCounter].style.backgroundColor = "#00ff00";
+    pointsThemEl[handCounter].style.backgroundColor = "#ff0000";
+    handWinnerTracker = [handWinnerTracker[0] + 1, handWinnerTracker[1]];
+  } else if (whoWon === "them") {
+    pointsUsEl[handCounter].style.backgroundColor = "#ff0000";
+    pointsThemEl[handCounter].style.backgroundColor = "#00ff00";
+    handWinnerTracker = [handWinnerTracker[0], handWinnerTracker[1] + 1];
+  } else {
+  }
+  handCounter++;
+  usTotalEl.textContent = handWinnerTracker[0];
+  themTotalEl.textContent = handWinnerTracker[1];
 }
 
 //PLAYER 1 BUTTONS
