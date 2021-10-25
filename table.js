@@ -61,6 +61,9 @@ const roundThem2El = document.querySelector(".round-them-2");
 const roundThem3El = document.querySelector(".round-them-3");
 const roundsThemEl = [roundThem1El, roundThem2El, roundThem3El];
 
+const pointsUsEl = document.querySelectorAll(".point-us");
+const pointsThemEl = document.querySelectorAll(".point-them");
+
 //MIDDLE TABLE CARDS (PLAYED CARDS)
 //PLAYER 1
 const positionBottomEl = document.querySelector(".position-bottom");
@@ -122,6 +125,7 @@ const timeDelay = 600;
 let roundNumber = 0;
 let randomCard;
 let roundWinTracker = [undefined, undefined, undefined];
+let handWinnerTracker = [0, 0];
 
 //FLIPPED AND TRUMP CARDS
 let flippedCard = [];
@@ -140,6 +144,7 @@ let handPlayer4 = [undefined, undefined, undefined, 3];
 //ROUND CARDS
 let roundCards = [];
 let roundTurn = [handPlayer1, handPlayer2, handPlayer3, handPlayer4];
+let handTurnCounter = 0;
 let roundTurnCounter = 0;
 
 btnStartRound.addEventListener("click", function () {
@@ -221,7 +226,42 @@ btnNextHand.addEventListener("click", function () {
   handPlayer2 = [undefined, undefined, undefined, 1];
   handPlayer3 = [undefined, undefined, undefined, 2];
   handPlayer4 = [undefined, undefined, undefined, 3];
-  roundTurn = [handPlayer1, handPlayer2, handPlayer3, handPlayer4];
+
+  handTurnCounter < 3 ? handTurnCounter++ : (handTurnCounter = 0);
+  switch (handTurnCounter) {
+    case 0:
+      [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
+        handPlayer1,
+        handPlayer2,
+        handPlayer3,
+        handPlayer4,
+      ];
+      break;
+    case 1:
+      [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
+        handPlayer2,
+        handPlayer3,
+        handPlayer4,
+        handPlayer1,
+      ];
+      break;
+    case 2:
+      [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
+        handPlayer3,
+        handPlayer4,
+        handPlayer1,
+        handPlayer2,
+      ];
+      break;
+    case 3:
+      [roundTurn[0], roundTurn[1], roundTurn[2], roundTurn[3]] = [
+        handPlayer4,
+        handPlayer1,
+        handPlayer2,
+        handPlayer3,
+      ];
+      break;
+  }
 
   deck.length = 0;
   createDeck();
@@ -234,11 +274,6 @@ btnNextHand.addEventListener("click", function () {
   findsTrump();
   ChangeTrumpPower();
   setUpCards();
-
-  console.log(handPlayer1);
-  console.log(handPlayer2);
-  console.log(handPlayer3);
-  console.log(handPlayer4);
   roundTurnCounter = 0;
   playRound();
 });
