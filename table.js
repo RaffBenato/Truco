@@ -3,7 +3,10 @@
 const btnStartRound = document.querySelector(".btn-start");
 const btnNextRound = document.querySelector(".btn-next-round");
 const btnNextHand = document.querySelector(".btn-next-hand");
+const btnHideEl = document.querySelector(".btn-hide");
+const btnTrucoEl = document.querySelector(".btn-truco");
 const messageEl = document.querySelector(".message");
+const overlayTableEl = document.querySelector(".overlay-table");
 
 //PLAYER 1 ELEMENTS
 const player1Card1El = document.querySelector(".player1-card1");
@@ -66,6 +69,8 @@ const pointsThemEl = document.querySelectorAll(".point-them");
 
 const usTotalEl = document.querySelector(".us-total");
 const themTotalEl = document.querySelector(".them-total");
+
+const roundWorth = 1;
 
 //MIDDLE TABLE CARDS (PLAYED CARDS)
 //PLAYER 1
@@ -648,21 +653,34 @@ function checkRoundWinner() {
 
   messageEl.classList.remove("hidden");
 }
-
+///////////////////////////////////////
+// Hand scoring
 function scoreHandWinner(whoWon) {
   if (whoWon === "us") {
-    pointsUsEl[handCounter].style.backgroundColor = "#00ff00";
-    pointsThemEl[handCounter].style.backgroundColor = "#ff0000";
     handWinnerTracker = [handWinnerTracker[0] + 1, handWinnerTracker[1]];
+    if (handWinnerTracker[0] >= 12) {
+      messageEl.textContent = "We win the Game!!!";
+      messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
+      btnNextHand.classList.remove("hidden");
+      overlayTableEl.classList.remove("hidden");
+    }
+    pointsUsEl[handWinnerTracker[0] - 1].style.backgroundColor = "#00ff00";
   } else if (whoWon === "them") {
-    pointsUsEl[handCounter].style.backgroundColor = "#ff0000";
-    pointsThemEl[handCounter].style.backgroundColor = "#00ff00";
     handWinnerTracker = [handWinnerTracker[0], handWinnerTracker[1] + 1];
+    if (handWinnerTracker[1] >= 12) {
+      messageEl.textContent = "They win the Game!!!";
+      messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
+      btnNextHand.classList.remove("hidden");
+      overlayTableEl.classList.remove("hidden");
+      overlayTableEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
+    }
+    pointsThemEl[handWinnerTracker[1] - 1].style.backgroundColor = "#00ff00";
   } else {
   }
   handCounter++;
   usTotalEl.textContent = handWinnerTracker[0];
   themTotalEl.textContent = handWinnerTracker[1];
+  btnNextRound.classList.add("hidden");
 }
 
 //PLAYER 1 BUTTONS
@@ -684,5 +702,6 @@ for (let i = 0; i < player1CardsEl.length; i++) {
   });
 }
 
-//ON LOAD
-window.onload = function () {};
+btnTrucoEl.addEventListener("click", function () {
+  roundWorth = 3;
+});
