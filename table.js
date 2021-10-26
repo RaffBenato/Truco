@@ -6,6 +6,7 @@ const btnNextHand = document.querySelector(".btn-next-hand");
 const btnHideEl = document.querySelector(".btn-hide");
 const btnTrucoEl = document.querySelector(".btn-truco");
 const messageEl = document.querySelector(".message");
+const roundInfoEl = document.querySelector(".round-info");
 const overlayTableEl = document.querySelector(".overlay-table");
 
 //PLAYER 1 ELEMENTS
@@ -70,7 +71,7 @@ const pointsThemEl = document.querySelectorAll(".point-them");
 const usTotalEl = document.querySelector(".us-total");
 const themTotalEl = document.querySelector(".them-total");
 
-const roundWorth = 1;
+let roundWorth = 1;
 
 //MIDDLE TABLE CARDS (PLAYED CARDS)
 //PLAYER 1
@@ -230,6 +231,9 @@ btnNextHand.addEventListener("click", function () {
   handOutIndex = 0;
 
   trumpCards.length = 0;
+
+  roundInfoEl.textContent = "Round x1";
+  roundWorth = 1;
 
   handPlayer1 = [undefined, undefined, undefined, 0];
   handPlayer2 = [undefined, undefined, undefined, 1];
@@ -553,7 +557,7 @@ function checkRoundWinner() {
           setTimeout(function () {
             messageEl.textContent = "We win the Hand!";
             btnNextHand.classList.remove("hidden");
-            scoreHandWinner("us");
+            for (let r = 0; r < roundWorth; r++) scoreHandWinner("us");
           }, timeDelay * 2);
         } else {
           setTimeout(function () {
@@ -565,7 +569,7 @@ function checkRoundWinner() {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             btnNextHand.classList.remove("hidden");
-            scoreHandWinner("them");
+            for (let r = 0; r < roundWorth; r++) scoreHandWinner("them");
           }, timeDelay * 2);
         } else {
           setTimeout(function () {
@@ -578,14 +582,14 @@ function checkRoundWinner() {
             messageEl.textContent = "We win the Hand!";
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
             btnNextHand.classList.remove("hidden");
-            scoreHandWinner("us");
+            for (let r = 0; r < roundWorth; r++) scoreHandWinner("us");
           }, timeDelay * 2);
         } else if (roundWinTracker[0] === "them") {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
             btnNextHand.classList.remove("hidden");
-            scoreHandWinner("them");
+            for (let r = 0; r < roundWorth; r++) scoreHandWinner("them");
           }, timeDelay * 2);
         } else {
           let twoDraws = true;
@@ -605,7 +609,7 @@ function checkRoundWinner() {
             messageEl.textContent = "We win the Hand!";
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
             btnNextHand.classList.remove("hidden");
-            scoreHandWinner("us");
+            for (let r = 0; r < roundWorth; r++) scoreHandWinner("us");
           }, timeDelay * 2);
         }
       } else if (whoWon === "them") {
@@ -618,7 +622,7 @@ function checkRoundWinner() {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
             btnNextHand.classList.remove("hidden");
-            scoreHandWinner("them");
+            for (let r = 0; r < roundWorth; r++) scoreHandWinner("them");
           }, timeDelay * 2);
         }
       } else {
@@ -627,14 +631,14 @@ function checkRoundWinner() {
             messageEl.textContent = "We win the Hand!";
             messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
             btnNextHand.classList.remove("hidden");
-            scoreHandWinner("us");
+            for (let r = 0; r < roundWorth; r++) scoreHandWinner("us");
           }, timeDelay * 2);
         } else if (roundWinTracker[0] === "them") {
           setTimeout(function () {
             messageEl.textContent = "They win the Hand!";
             messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
             btnNextHand.classList.remove("hidden");
-            scoreHandWinner("them");
+            for (let r = 0; r < roundWorth; r++) scoreHandWinner("them");
           }, timeDelay * 2);
         } else {
           setTimeout(function () {
@@ -703,5 +707,8 @@ for (let i = 0; i < player1CardsEl.length; i++) {
 }
 
 btnTrucoEl.addEventListener("click", function () {
-  roundWorth = 3;
+  if (isMyTurn === true) {
+    roundInfoEl.textContent = "Truco! x3";
+    roundWorth = 3;
+  }
 });
