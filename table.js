@@ -735,6 +735,7 @@ btnDontHideEl.addEventListener("click", function () {
 for (let i = 0; i < player1CardsEl.length; i++) {
   player1CardsEl[i].addEventListener("click", function () {
     if (isMyTurn) {
+      isMyTurn = false;
       if (hideCard) {
         roundCards[0] = handPlayer1[i];
         // sets the power of hidden card to 0
@@ -747,7 +748,6 @@ for (let i = 0; i < player1CardsEl.length; i++) {
         if (roundTurn[3] === handPlayer1) {
           checkRoundWinner();
         } else {
-          isMyTurn = false;
           roundTurnCounter++;
           playRound();
         }
@@ -755,11 +755,9 @@ for (let i = 0; i < player1CardsEl.length; i++) {
         roundCards[0] = handPlayer1[i];
         PlayCard(0, handPlayer1, i);
         player1CardsEl[i].classList.add("hidden");
-
         if (roundTurn[3] === handPlayer1) {
           checkRoundWinner();
         } else {
-          isMyTurn = false;
           roundTurnCounter++;
           playRound();
         }
@@ -784,6 +782,7 @@ btnTrucoEl.addEventListener("click", function () {
         messageEl.classList.add("hidden");
       }, timeDelay * 2);
     } else if (trucoChallengeChoice === 1) {
+      isMyTurn = false;
       roundInfoEl.textContent = "Round x1";
       roundWorth = 1;
       messageEl.textContent = "Truco declined!";
