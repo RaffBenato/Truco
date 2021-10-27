@@ -200,6 +200,10 @@ btnNextRound.addEventListener("click", function () {
 /////////////////////
 //NEXT HAND/////////
 btnNextHand.addEventListener("click", function () {
+  nextHand();
+});
+
+function nextHand() {
   // CLEAR UP CARDS FROM TABLE
   for (let i = 0; i < positionOfCardsEl.length; i++) {
     positionOfCardsEl[i].classList.add("hidden");
@@ -227,6 +231,8 @@ btnNextHand.addEventListener("click", function () {
 
   messageEl.classList.add("hidden");
   btnNextHand.classList.add("hidden");
+  btnTrucoEl.textContent = "Truco";
+  btnTrucoEl.classList.remove("hidden");
 
   //SETTING UP THE NEW HAND
   roundNumber = 0;
@@ -294,8 +300,7 @@ btnNextHand.addEventListener("click", function () {
   resetMiddleCards();
   roundTurnCounter = 0;
   playRound();
-});
-
+}
 //CREATES THE DECK OF CARDS
 function createDeck() {
   let p = 1;
@@ -772,23 +777,33 @@ btnTrucoEl.addEventListener("click", function () {
       roundInfoEl.textContent = "Truco! x3";
       roundWorth = 3;
       messageEl.textContent = "Truco accepted!";
+      btnTrucoEl.classList.add("hidden");
+      messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+      messageEl.classList.remove("hidden");
+      setTimeout(function () {
+        messageEl.classList.add("hidden");
+      }, timeDelay * 2);
     } else if (trucoChallengeChoice === 1) {
       roundInfoEl.textContent = "Round x1";
       roundWorth = 1;
       messageEl.textContent = "Truco declined!";
+      messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+      messageEl.classList.remove("hidden");
       setTimeout(function () {
         scoreHandWinner("us");
+        btnNextHand.classList.remove("hidden");
       }, timeDelay * 2);
     } else {
       roundInfoEl.textContent = "Seis! x6";
       roundWorth = 6;
       messageEl.textContent = "They reply with 6!!!!";
+      btnTrucoEl.textContent = "Nove!";
+      messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+      messageEl.classList.remove("hidden");
+      setTimeout(function () {
+        messageEl.classList.add("hidden");
+      }, timeDelay * 2);
     }
-    messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-    messageEl.classList.remove("hidden");
-    setTimeout(function () {
-      messageEl.classList.add("hidden");
-    }, timeDelay * 2);
   }
 });
 
