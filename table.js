@@ -680,7 +680,7 @@ function checkRoundWinner() {
   messageEl.classList.remove("hidden");
 }
 ///////////////////////////////////////
-// Hand scoring
+// SCORING OF THE GAME HANDS
 function scoreHandWinner(whoWon) {
   if (whoWon === "us") {
     handWinnerTracker = [handWinnerTracker[0] + 1, handWinnerTracker[1]];
@@ -763,9 +763,35 @@ for (let i = 0; i < player1CardsEl.length; i++) {
   });
 }
 
+///////////////////////////////
+// BUTTON TRUCO
 btnTrucoEl.addEventListener("click", function () {
   if (isMyTurn === true) {
-    roundInfoEl.textContent = "Truco! x3";
-    roundWorth = 3;
+    const trucoChallengeChoice = randomComputerChoice(2);
+    if (trucoChallengeChoice === 0) {
+      roundInfoEl.textContent = "Truco! x3";
+      roundWorth = 3;
+      messageEl.textContent = "Truco accepted!";
+    } else if (trucoChallengeChoice === 1) {
+      roundInfoEl.textContent = "Round x1";
+      roundWorth = 1;
+      messageEl.textContent = "Truco declined!";
+      setTimeout(function () {
+        scoreHandWinner("us");
+      }, timeDelay * 2);
+    } else {
+      roundInfoEl.textContent = "Seis! x6";
+      roundWorth = 6;
+      messageEl.textContent = "They reply with 6!!!!";
+    }
+    messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+    messageEl.classList.remove("hidden");
+    setTimeout(function () {
+      messageEl.classList.add("hidden");
+    }, timeDelay * 2);
   }
 });
+
+function randomComputerChoice(numberOfOptions) {
+  return Math.floor(Math.random() * (numberOfOptions + 1));
+}
