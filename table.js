@@ -190,6 +190,8 @@ btnNextRound.addEventListener("click", function () {
   messageEl.classList.add("hidden");
   btnNextRound.classList.add("hidden");
 
+  resetMiddleCards();
+
   roundTurnCounter = 0;
   roundNumber++;
   playRound();
@@ -289,6 +291,7 @@ btnNextHand.addEventListener("click", function () {
   findsTrump();
   ChangeTrumpPower();
   setUpCards();
+  resetMiddleCards();
   roundTurnCounter = 0;
   playRound();
 });
@@ -455,13 +458,30 @@ function playRound() {
 
 //PLAY CARD
 function PlayCard(position, whichPlayer, whichCard) {
-  positionOfCardsEl[position].classList.remove("hidden");
-  positionOfCardsEl[position].classList.add(
-    `card-${whichPlayer[whichCard][2]}`
-  );
-  positionSuitsEl[position].src = `img/${whichPlayer[whichCard][2]}.png`;
-  positionNumbersEl[position][0].textContent = whichPlayer[whichCard][1];
-  positionNumbersEl[position][1].textContent = whichPlayer[whichCard][1];
+  if (hideCard) {
+    positionOfCardsEl[position].classList.remove("hidden");
+    positionOfCardsEl[position].classList.add("card-back");
+    positionNumbersEl[position][0].classList.add("hidden");
+    positionNumbersEl[position][1].classList.add("hidden");
+    positionSuitsEl[position].classList.add("hidden");
+  } else {
+    positionOfCardsEl[position].classList.remove("hidden");
+    positionOfCardsEl[position].classList.add(
+      `card-${whichPlayer[whichCard][2]}`
+    );
+    positionSuitsEl[position].src = `img/${whichPlayer[whichCard][2]}.png`;
+    positionNumbersEl[position][0].textContent = whichPlayer[whichCard][1];
+    positionNumbersEl[position][1].textContent = whichPlayer[whichCard][1];
+  }
+}
+
+function resetMiddleCards() {
+  for (let i = 0; i < 3; i++) {
+    positionOfCardsEl[i].classList.remove("card-back");
+    positionNumbersEl[i][0].classList.remove("hidden");
+    positionNumbersEl[i][1].classList.remove("hidden");
+    positionSuitsEl[i].classList.remove("hidden");
+  }
 }
 
 //CHECKS THE ROUND WINNER
@@ -710,16 +730,34 @@ btnDontHideEl.addEventListener("click", function () {
 for (let i = 0; i < player1CardsEl.length; i++) {
   player1CardsEl[i].addEventListener("click", function () {
     if (isMyTurn) {
-      roundCards[0] = handPlayer1[i];
-      PlayCard(0, handPlayer1, i);
-      player1CardsEl[i].classList.add("hidden");
-
-      if (roundTurn[3] === handPlayer1) {
-        checkRoundWinner();
+      if (hideCard) {
+        roundCards[0] = handPlayer1[i];
+        // sets the power of hidden card to 0
+        handPlayer1[i][3] = 0;
+        PlayCard(0, handPlayer1, i);
+        player1CardsEl[i].classList.add("hidden");
+        hideCard = false;
+        btnHideEl.classList.remove("hidden");
+        btnDontHideEl.classList.add("hidden");
+        if (roundTurn[3] === handPlayer1) {
+          checkRoundWinner();
+        } else {
+          isMyTurn = false;
+          roundTurnCounter++;
+          playRound();
+        }
       } else {
-        isMyTurn = false;
-        roundTurnCounter++;
-        playRound();
+        roundCards[0] = handPlayer1[i];
+        PlayCard(0, handPlayer1, i);
+        player1CardsEl[i].classList.add("hidden");
+
+        if (roundTurn[3] === handPlayer1) {
+          checkRoundWinner();
+        } else {
+          isMyTurn = false;
+          roundTurnCounter++;
+          playRound();
+        }
       }
     }
   });
