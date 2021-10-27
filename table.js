@@ -4,6 +4,7 @@ const btnStartRound = document.querySelector(".btn-start");
 const btnNextRound = document.querySelector(".btn-next-round");
 const btnNextHand = document.querySelector(".btn-next-hand");
 const btnHideEl = document.querySelector(".btn-hide");
+const btnDontHideEl = document.querySelector(".btn-dont-hide");
 const btnTrucoEl = document.querySelector(".btn-truco");
 const messageEl = document.querySelector(".message");
 const roundInfoEl = document.querySelector(".round-info");
@@ -130,6 +131,7 @@ let card = []; //card array items = [index, number, suit, power]
 const cardNumbers = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"];
 const cardSuits = ["diamond", "spade", "heart", "club"];
 let isMyTurn = false;
+let hideCard = false;
 const timeDelay = 600;
 let roundNumber = 0;
 let randomCard;
@@ -687,6 +689,23 @@ function scoreHandWinner(whoWon) {
   btnNextRound.classList.add("hidden");
 }
 
+//////////////////////////////
+//HIDE CARDS BUTTON
+btnHideEl.addEventListener("click", function () {
+  if (isMyTurn) {
+    hideCard = true;
+    btnHideEl.classList.add("hidden");
+    btnDontHideEl.classList.remove("hidden");
+  }
+});
+
+btnDontHideEl.addEventListener("click", function () {
+  hideCard = false;
+  btnHideEl.classList.remove("hidden");
+  btnDontHideEl.classList.add("hidden");
+});
+
+//////////////////////////////
 //PLAYER 1 BUTTONS
 for (let i = 0; i < player1CardsEl.length; i++) {
   player1CardsEl[i].addEventListener("click", function () {

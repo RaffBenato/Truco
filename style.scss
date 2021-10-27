@@ -239,7 +239,8 @@ body {
   .btn-next-round,
   .btn-next-hand,
   .btn-truco,
-  .btn-hide {
+  .btn-hide,
+  .btn-dont-hide {
     position: absolute;
     top: 45%;
     left: 50%;
@@ -268,6 +269,14 @@ body {
     background-color: rgba(15, 12, 175, 0.8);
     top: 89%;
     left: 75%;
+    height: 55px;
+    cursor: pointer;
+  }
+
+  .btn-dont-hide {
+    background-color: rgba(15, 12, 175, 0.8);
+    top: 68%;
+    left: 50%;
     height: 55px;
     cursor: pointer;
   }
