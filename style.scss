@@ -240,7 +240,8 @@ body {
   .btn-next-hand,
   .btn-truco,
   .btn-hide,
-  .btn-dont-hide {
+  .btn-dont-hide,
+  .btn-next-game {
     position: absolute;
     top: 45%;
     left: 50%;
@@ -282,9 +283,14 @@ body {
   }
 
   .btn-next-round,
-  .btn-next-hand {
+  .btn-next-hand,
+  .btn-next-game {
     top: 50%;
     cursor: pointer;
+  }
+
+  .btn-next-game {
+    z-index: 21;
   }
 
   .btn-start {
