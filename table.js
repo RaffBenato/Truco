@@ -133,6 +133,7 @@ const cardNumbers = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"];
 const cardSuits = ["diamond", "spade", "heart", "club"];
 let isMyTurn = false;
 let hideCard = false;
+let isGameOver = false;
 const timeDelay = 600;
 let roundNumber = 0;
 let randomCard;
@@ -202,16 +203,24 @@ btnNextRound.addEventListener("click", function () {
 //NEXT HAND/////////
 btnNextHand.addEventListener("click", nextHand);
 
+/////////////////////
+//NEXT GAME/////////
 btnNextGameEl.addEventListener("click", function () {
   handCounter = 0;
-  handTurnCounter = 0;
+  handTurnCounter = 4;
   handWinnerTracker = [0, 0];
+  isGameOver = false;
 
-  overlayTableEl.classList.remove("hidden");
+  usTotalEl.textContent = handWinnerTracker[0];
+  themTotalEl.textContent = handWinnerTracker[1];
+  btnNextGameEl.classList.add("hidden");
+  overlayTableEl.classList.add("hidden");
   for (let r = 0; r < 12; r++) {
     pointsUsEl[r].style.backgroundColor = "rgba(141, 140, 140, 0.3)";
     pointsThemEl[r].style.backgroundColor = "rgba(141, 140, 140, 0.3)";
   }
+
+  nextHand();
 });
 
 function nextHand() {
@@ -703,29 +712,48 @@ function scoreHandWinner(whoWon) {
   if (whoWon === "us") {
     handWinnerTracker = [handWinnerTracker[0] + 1, handWinnerTracker[1]];
     if (handWinnerTracker[0] >= 12) {
-      messageEl.textContent = "We win the Game!!!";
+      if ((handWinnerTracker[1] = 12)) {
+        pointsUsEl[11].style.backgroundColor = "#00ff00";
+      }
+      messageEl.textContent = `We win the Game!!! \n
+      ${handWinnerTracker[0]} - ${handWinnerTracker[1]}`;
       messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
       btnNextHand.classList.remove("hidden");
       overlayTableEl.classList.remove("hidden");
       btnNextGameEl.classList.remove("hidden");
+      isGameOver = true;
     }
-    pointsUsEl[handWinnerTracker[0] - 1].style.backgroundColor = "#00ff00";
+    !isGameOver
+      ? (pointsUsEl[handWinnerTracker[0] - 1].style.backgroundColor = "#00ff00")
+      : null;
   } else if (whoWon === "them") {
     handWinnerTracker = [handWinnerTracker[0], handWinnerTracker[1] + 1];
     if (handWinnerTracker[1] >= 12) {
-      messageEl.textContent = "They win the Game!!!";
+      if ((handWinnerTracker[1] = 12)) {
+        pointsThemEl[11].style.backgroundColor = "#00ff00";
+      }
+      messageEl.textContent = `They win the Game!!! \n
+      ${handWinnerTracker[0]} - ${handWinnerTracker[1]}`;
       messageEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
       btnNextHand.classList.remove("hidden");
       overlayTableEl.classList.remove("hidden");
       overlayTableEl.style.backgroundColor = "rgba(236, 14, 14, 0.8)";
       btnNextGameEl.classList.remove("hidden");
+      isGameOver = true;
     }
-    pointsThemEl[handWinnerTracker[1] - 1].style.backgroundColor = "#00ff00";
+    !isGameOver
+      ? (pointsThemEl[handWinnerTracker[1] - 1].style.backgroundColor =
+          "#00ff00")
+      : null;
   } else {
   }
   handCounter++;
-  usTotalEl.textContent = handWinnerTracker[0];
-  themTotalEl.textContent = handWinnerTracker[1];
+  handWinnerTracker[0] <= 12
+    ? (usTotalEl.textContent = handWinnerTracker[0])
+    : (usTotalEl.textContent = 12);
+  handWinnerTracker[1] <= 12
+    ? (themTotalEl.textContent = handWinnerTracker[1])
+    : (themTotalEl.textContent = 12);
   btnNextRound.classList.add("hidden");
 }
 
@@ -836,7 +864,7 @@ btnTrucoEl.addEventListener("click", function () {
         isMyTurn = false;
         roundInfoEl.textContent = "Seis x6";
         roundWorth = 6;
-        messageEl.textContent = "Seis  declined!";
+        messageEl.textContent = "Nove declined!";
         messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
         messageEl.classList.remove("hidden");
         setTimeout(function () {
