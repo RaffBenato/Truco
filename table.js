@@ -135,8 +135,7 @@ let isMyTurn = false;
 let hideCard = false;
 let isGameOver = false;
 let twoDraws = false;
-let blindHandUs = false;
-let blindHandThem = false;
+let blindHand = false;
 const timeDelay = 600;
 let roundNumber = 0;
 let randomCard;
@@ -215,8 +214,7 @@ btnNextGameEl.addEventListener("click", function () {
   handTurnCounter = 4;
   handWinnerTracker = [0, 0];
   isGameOver = false;
-  blindHandUs = false;
-  blindHandThem = false;
+  blindHand = false;
 
   usTotalEl.textContent = handWinnerTracker[0];
   themTotalEl.textContent = handWinnerTracker[1];
@@ -427,23 +425,54 @@ function setUpCards() {
     trumpSuitInfoEl[i].classList.remove("hidden");
   }
 
-  //SETTING UP PLAYER 1 CARD 1
-  player1Card1El.classList.add(`card-${handPlayer1[0][2]}`);
-  player1Card1SuitEl.src = `img/${handPlayer1[0][2]}.png`;
-  player1Card1NumberEl[0].textContent = handPlayer1[0][1];
-  player1Card1NumberEl[1].textContent = handPlayer1[0][1];
+  if (blindHand === true) {
+    player1Card1El.classList.add("card-back");
+    player1Card2El.classList.add("card-back");
+    player1Card3El.classList.add("card-back");
 
-  //SETTING UP PLAYER 1 CARD 2
-  player1Card2El.classList.add(`card-${handPlayer1[1][2]}`);
-  player1Card2SuitEl.src = `img/${handPlayer1[1][2]}.png`;
-  player1Card2NumberEl[0].textContent = handPlayer1[1][1];
-  player1Card2NumberEl[1].textContent = handPlayer1[1][1];
+    player1Card1SuitEl.classList.add("hidden");
+    player1Card1NumberEl[0].classList.add("hidden");
+    player1Card1NumberEl[1].classList.add("hidden");
 
-  //SETTING UP PLAYER 1 CARD 3
-  player1Card3El.classList.add(`card-${handPlayer1[2][2]}`);
-  player1Card3SuitEl.src = `img/${handPlayer1[2][2]}.png`;
-  player1Card3NumberEl[0].textContent = handPlayer1[2][1];
-  player1Card3NumberEl[1].textContent = handPlayer1[2][1];
+    player1Card2SuitEl.classList.add("hidden");
+    player1Card2NumberEl[0].classList.add("hidden");
+    player1Card2NumberEl[1].classList.add("hidden");
+
+    player1Card3SuitEl.classList.add("hidden");
+    player1Card3NumberEl[0].classList.add("hidden");
+    player1Card3NumberEl[1].classList.add("hidden");
+  } else {
+    player1Card1El.classList.remove("card-back");
+    player1Card2El.classList.remove("card-back");
+    player1Card3El.classList.remove("card-back");
+
+    player1Card1SuitEl.classList.remove("hidden");
+    player1Card1NumberEl[0].classList.remove("hidden");
+    player1Card1NumberEl[1].classList.remove("hidden");
+
+    player1Card2SuitEl.classList.remove("hidden");
+    player1Card2NumberEl[0].classList.remove("hidden");
+    player1Card2NumberEl[1].classList.remove("hidden");
+
+    player1Card3SuitEl.classList.remove("hidden");
+    player1Card3NumberEl[0].classList.remove("hidden");
+    player1Card3NumberEl[1].classList.remove("hidden");
+
+    player1Card1El.classList.add(`card-${handPlayer1[0][2]}`);
+    player1Card1SuitEl.src = `img/${handPlayer1[0][2]}.png`;
+    player1Card1NumberEl[0].textContent = handPlayer1[0][1];
+    player1Card1NumberEl[1].textContent = handPlayer1[0][1];
+
+    player1Card2El.classList.add(`card-${handPlayer1[1][2]}`);
+    player1Card2SuitEl.src = `img/${handPlayer1[1][2]}.png`;
+    player1Card2NumberEl[0].textContent = handPlayer1[1][1];
+    player1Card2NumberEl[1].textContent = handPlayer1[1][1];
+
+    player1Card3El.classList.add(`card-${handPlayer1[2][2]}`);
+    player1Card3SuitEl.src = `img/${handPlayer1[2][2]}.png`;
+    player1Card3NumberEl[0].textContent = handPlayer1[2][1];
+    player1Card3NumberEl[1].textContent = handPlayer1[2][1];
+  }
 
   // DISPLAY CARDS
   for (let i = 0; i < playerCardsEl.length; i++) {
@@ -718,7 +747,6 @@ function checkRoundWinner() {
 function scoreHandWinner(whoWon) {
   if (whoWon === "us") {
     handWinnerTracker = [handWinnerTracker[0] + 1, handWinnerTracker[1]];
-    handWinnerTracker[0] === 11 ? (blindHandUs = true) : (blindHandUs = false);
     if (handWinnerTracker[0] >= 12) {
       if ((handWinnerTracker[0] = 12)) {
         pointsUsEl[11].style.backgroundColor = "#00ff00";
@@ -735,9 +763,6 @@ function scoreHandWinner(whoWon) {
       : null;
   } else if (whoWon === "them") {
     handWinnerTracker = [handWinnerTracker[0], handWinnerTracker[1] + 1];
-    handWinnerTracker[1] === 11
-      ? (blindHandThem = true)
-      : (blindHandThem = false);
     if (handWinnerTracker[1] >= 12) {
       if ((handWinnerTracker[1] = 12)) {
         pointsThemEl[11].style.backgroundColor = "#00ff00";
@@ -757,6 +782,11 @@ function scoreHandWinner(whoWon) {
   } else {
   }
   handCounter++;
+  if (handWinnerTracker[0] === 11 && handWinnerTracker[1] === 11) {
+    blindHand = true;
+  } else {
+    blindHand = false;
+  }
   handWinnerTracker[0] <= 12
     ? (usTotalEl.textContent = handWinnerTracker[0])
     : (usTotalEl.textContent = 12);
