@@ -939,18 +939,21 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
       roundInfoEl.textContent = `${call} x${roundWorth}`;
       btnTrucoEl.classList.add("hidden");
       btnHideEl.classList.add("hidden");
-      raiseHand(roundWorth, "They");
+      setTimeout(function () {
+        raiseHand(roundWorth, "They");
+      }, timeDelay * 2);
     }
   } else if (whoIsRaising === "They") {
     setTimeout(function () {
       messageEl.classList.remove("hidden");
       btnAcceptEl.classList.remove("hidden");
       btnRunEl.classList.remove("hidden");
-      btnRaiseEl.classList.remove("hidden");
+      if (suggestedRoundWorth !== 12) btnRaiseEl.classList.remove("hidden");
+
       globalCall = call;
       globalCurrentRoundWorth = currentRoundWorth;
       globalSuggestedRoundWorth = suggestedRoundWorth;
-    }, timeDelay * 2.01);
+    }, timeDelay * 1);
   }
 }
 
@@ -989,7 +992,10 @@ btnRaiseEl.addEventListener("click", function () {
   btnAcceptEl.classList.add("hidden");
   btnRunEl.classList.add("hidden");
   btnRaiseEl.classList.add("hidden");
-  raiseHand(globalCurrentRoundWorth, "We");
+
+  roundInfoEl.textContent = `${globalCall} x${roundWorth}`;
+
+  raiseHand(globalSuggestedRoundWorth, "We");
 });
 
 function randomComputerChoice(numberOfOptions) {
