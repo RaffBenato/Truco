@@ -213,8 +213,10 @@ btnNextRound.addEventListener("click", function () {
 //NEXT HAND/////////
 btnNextHand.addEventListener("click", function () {
   if (blindHand === true) {
+    messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
     messageEl.textContent = "Iron Hand!";
     messageEl.classList.remove("hidden");
+    btnNextHand.classList.add("hidden");
     setTimeout(function () {
       messageEl.classList.add("hidden");
       nextHand();
