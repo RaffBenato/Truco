@@ -7,6 +7,9 @@ const btnNextGameEl = document.querySelector(".btn-next-game");
 const btnHideEl = document.querySelector(".btn-hide");
 const btnDontHideEl = document.querySelector(".btn-dont-hide");
 const btnTrucoEl = document.querySelector(".btn-truco");
+const btnAcceptEl = document.querySelector(".btn-accept");
+const btnRaiseEl = document.querySelector(".btn-raise");
+const btnRunEl = document.querySelector(".btn-run");
 const messageEl = document.querySelector(".message");
 const roundInfoEl = document.querySelector(".round-info");
 const overlayTableEl = document.querySelector(".overlay-table");
@@ -491,6 +494,15 @@ function playRound() {
       isMyTurn = true;
       break;
     } else {
+      // if (
+      //   roundTurn[roundTurnCounter] === handPlayer2 ||
+      //   roundTurn[roundTurnCounter] === handPlayer4
+      // ) {
+      //   const computerDecidesToCallTruco = randomComputerChoice(1);
+      //   if (computerDecidesToCallTruco === 0) {
+      //     raiseHand(roundWorth, "They");
+      //   }
+      // }
       randomCard = Math.trunc(
         Math.random() * (roundTurn[roundTurnCounter].length - 1)
       ); //PLAYS RANDOM CARD FOR NOW
@@ -889,114 +901,71 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
     messageEl.classList.add("hidden");
   }, timeDelay * 2);
 
-  if (currentRoundWorth === 1) {
-    if (whoIsRaising === "We") {
-      const trucoChallengeChoice = randomComputerChoice(2);
-      if (trucoChallengeChoice === 0) {
+  if (whoIsRaising === "We") {
+    // const trucoChallengeChoice = randomComputerChoice(2);
+    const trucoChallengeChoice = 0;
+    if (trucoChallengeChoice === 0) {
+      roundWorth = suggestedRoundWorth;
+      roundInfoEl.textContent = `${call} x${roundWorth}`;
+      setTimeout(function () {
+        messageEl.textContent = `${call} accepted!`;
+        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+        messageEl.classList.remove("hidden");
+      }, timeDelay * 2);
+      btnTrucoEl.classList.add("hidden");
+      setTimeout(function () {
+        messageEl.classList.add("hidden");
+      }, timeDelay * 3);
+    } else if (trucoChallengeChoice === 1) {
+      isMyTurn = false;
+      roundWorth = currentRoundWorth;
+      roundInfoEl.textContent = `${call} x${roundWorth}`;
+      setTimeout(function () {
+        messageEl.textContent = `${call} declined!`;
+        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+        messageEl.classList.remove("hidden");
+        btnNextHand.classList.remove("hidden");
+      }, timeDelay * 2);
+      setTimeout(function () {
+        scoreHandWinner("us");
+        btnNextHand.classList.remove("hidden");
+      }, timeDelay * 3);
+    } else {
+      roundWorth = suggestedRoundWorth;
+      roundInfoEl.textContent = `${call} x${roundWorth}`;
+      btnTrucoEl.classList.add("hidden");
+      btnHideEl.classList.add("hidden");
+      raiseHand(roundWorth, "They");
+    }
+  } else if (whoIsRaising === "They") {
+    setTimeout(function () {
+      messageEl.classList.remove("hidden");
+      btnAcceptEl.classList.remove("hidden");
+      btnRunEl.classList.remove("hidden");
+      btnRaiseEl.classList.remove("hidden");
+
+      btnAcceptEl.addEventListener("click", function () {});
+
+      btnRunEl.addEventListener("click", function () {
         roundWorth = suggestedRoundWorth;
         roundInfoEl.textContent = `${call} x${roundWorth}`;
+
         setTimeout(function () {
-          messageEl.textContent = `${call} accepted!`;
-          messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-          messageEl.classList.remove("hidden");
-        }, timeDelay * 2);
-        btnTrucoEl.classList.add("hidden");
-        setTimeout(function () {
-          messageEl.classList.add("hidden");
-        }, timeDelay * 3);
-      } else if (trucoChallengeChoice === 1) {
-        isMyTurn = false;
-        roundWorth = currentRoundWorth;
-        roundInfoEl.textContent = `${call} x${roundWorth}`;
-        setTimeout(function () {
-          messageEl.textContent = "Truco declined!";
+          // messageEl.textContent = `${call} declined!`;
           messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
           messageEl.classList.remove("hidden");
           btnNextHand.classList.remove("hidden");
         }, timeDelay * 2);
         setTimeout(function () {
-          scoreHandWinner("us");
+          scoreHandWinner("them");
           btnNextHand.classList.remove("hidden");
         }, timeDelay * 3);
-      }
-    }
+      });
+
+      btnRaiseEl.addEventListener("click", function () {});
+    }, timeDelay * 2.01);
   }
 }
-
-/*btnTrucoEl.addEventListener("click", function () {
-  if (isMyTurn === true) {
-    if (roundWorth === 1) {
-      const trucoChallengeChoice = randomComputerChoice(2);
-      if (trucoChallengeChoice === 0) {
-        roundInfoEl.textContent = "Truco! x3";
-        roundWorth = 3;
-        messageEl.textContent = "Truco accepted!";
-        btnTrucoEl.classList.add("hidden");
-        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-        messageEl.classList.remove("hidden");
-        setTimeout(function () {
-          messageEl.classList.add("hidden");
-        }, timeDelay * 2);
-      } else if (trucoChallengeChoice === 1) {
-        isMyTurn = false;
-        roundInfoEl.textContent = "Round x1";
-        roundWorth = 1;
-        messageEl.textContent = "Truco declined!";
-        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-        messageEl.classList.remove("hidden");
-        setTimeout(function () {
-          scoreHandWinner("us");
-          btnNextHand.classList.remove("hidden");
-        }, timeDelay * 2);
-      } else {
-        roundInfoEl.textContent = "Seis! x6";
-        roundWorth = 6;
-        messageEl.textContent = "They reply with 6!!!!";
-        btnTrucoEl.textContent = "Nove!";
-        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-        messageEl.classList.remove("hidden");
-        setTimeout(function () {
-          messageEl.classList.add("hidden");
-        }, timeDelay * 2);
-      }
-    } else if (roundWorth === 6) {
-      roundWorth = 6;
-      const trucoNoveChallenge = randomComputerChoice(2);
-      if (trucoNoveChallenge === 0) {
-        roundInfoEl.textContent = "Nove! x9";
-        roundWorth = 9;
-        messageEl.textContent = "Nove accepted!";
-        btnTrucoEl.classList.add("hidden");
-        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-        messageEl.classList.remove("hidden");
-        setTimeout(function () {
-          messageEl.classList.add("hidden");
-        }, timeDelay * 2);
-      } else if (trucoNoveChallenge === 1) {
-        isMyTurn = false;
-        roundInfoEl.textContent = "Seis x6";
-        roundWorth = 6;
-        messageEl.textContent = "Nove declined!";
-        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-        messageEl.classList.remove("hidden");
-        setTimeout(function () {
-          for (let r = 0; r < roundWorth; r++) scoreHandWinner("us");
-          btnNextHand.classList.remove("hidden");
-        }, timeDelay * 2);
-      } else {
-        btnTrucoEl.classList.add("hidden");
-        roundInfoEl.textContent = "Doze x12";
-        roundWorth = 12;
-        messageEl.textContent = "They reply with 12!!!!";
-        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-        messageEl.classList.remove("hidden");
-        setTimeout(function () {
-          messageEl.classList.add("hidden");
-        }, timeDelay * 2);
-      }
-    }
-  }
-});*/
 
 function randomComputerChoice(numberOfOptions) {
   return Math.floor(Math.random() * (numberOfOptions + 1));

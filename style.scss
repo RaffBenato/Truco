@@ -241,7 +241,10 @@ body {
   .btn-truco,
   .btn-hide,
   .btn-dont-hide,
-  .btn-next-game {
+  .btn-next-game,
+  .btn-accept,
+  .btn-run,
+  .btn-raise {
     position: absolute;
     top: 45%;
     left: 50%;
@@ -264,6 +267,27 @@ body {
     left: 75%;
     height: 55px;
     cursor: pointer;
+  }
+
+  .btn-accept,
+  .btn-run,
+  .btn-raise {
+    background-color: rgba(15, 12, 175, 0.8);
+    height: 55px;
+    cursor: pointer;
+    top: 68%;
+  }
+
+  .btn-accept {
+    left: 35%;
+  }
+
+  .btn-run {
+    left: 65%;
+  }
+
+  .btn-raise {
+    left: 50%;
   }
 
   .btn-hide {
