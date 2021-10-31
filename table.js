@@ -857,6 +857,74 @@ for (let i = 0; i < player1CardsEl.length; i++) {
 // BUTTON TRUCO
 btnTrucoEl.addEventListener("click", function () {
   if (isMyTurn === true) {
+    raiseHand(roundWorth, "We");
+  }
+});
+
+function raiseHand(currentRoundWorth, whoIsRaising) {
+  let call = "";
+  let suggestedRoundWorth;
+  switch (currentRoundWorth) {
+    case 1:
+      call = "Truco";
+      suggestedRoundWorth = 3;
+      break;
+    case 3:
+      call = "Seis";
+      suggestedRoundWorth = 6;
+      break;
+    case 6:
+      call = "Nove";
+      suggestedRoundWorth = 9;
+      break;
+    case 9:
+      call = "Doze";
+      suggestedRoundWorth = 12;
+      break;
+  }
+  messageEl.textContent = `${whoIsRaising} called ${call}`;
+  messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+  messageEl.classList.remove("hidden");
+  setTimeout(function () {
+    messageEl.classList.add("hidden");
+  }, timeDelay * 2);
+
+  if (currentRoundWorth === 1) {
+    if (whoIsRaising === "We") {
+      const trucoChallengeChoice = randomComputerChoice(2);
+      if (trucoChallengeChoice === 0) {
+        roundWorth = suggestedRoundWorth;
+        roundInfoEl.textContent = `${call} x${roundWorth}`;
+        setTimeout(function () {
+          messageEl.textContent = `${call} accepted!`;
+          messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+          messageEl.classList.remove("hidden");
+        }, timeDelay * 2);
+        btnTrucoEl.classList.add("hidden");
+        setTimeout(function () {
+          messageEl.classList.add("hidden");
+        }, timeDelay * 3);
+      } else if (trucoChallengeChoice === 1) {
+        isMyTurn = false;
+        roundWorth = currentRoundWorth;
+        roundInfoEl.textContent = `${call} x${roundWorth}`;
+        setTimeout(function () {
+          messageEl.textContent = "Truco declined!";
+          messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+          messageEl.classList.remove("hidden");
+          btnNextHand.classList.remove("hidden");
+        }, timeDelay * 2);
+        setTimeout(function () {
+          scoreHandWinner("us");
+          btnNextHand.classList.remove("hidden");
+        }, timeDelay * 3);
+      }
+    }
+  }
+}
+
+/*btnTrucoEl.addEventListener("click", function () {
+  if (isMyTurn === true) {
     if (roundWorth === 1) {
       const trucoChallengeChoice = randomComputerChoice(2);
       if (trucoChallengeChoice === 0) {
@@ -928,7 +996,7 @@ btnTrucoEl.addEventListener("click", function () {
       }
     }
   }
-});
+});*/
 
 function randomComputerChoice(numberOfOptions) {
   return Math.floor(Math.random() * (numberOfOptions + 1));
