@@ -145,6 +145,9 @@ let randomCard;
 let roundWinTracker = [undefined, undefined, undefined];
 let handWinnerTracker = [0, 0];
 let handCounter = 0;
+let globalCurrentRoundWorth;
+let globalCall;
+let globalSuggestedRoundWorth;
 
 //FLIPPED AND TRUMP CARDS
 let flippedCard = [];
@@ -870,6 +873,7 @@ for (let i = 0; i < player1CardsEl.length; i++) {
 btnTrucoEl.addEventListener("click", function () {
   if (isMyTurn === true) {
     raiseHand(roundWorth, "We");
+    isMyTurn = false;
   }
 });
 
@@ -902,7 +906,8 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
   }, timeDelay * 2);
 
   if (whoIsRaising === "We") {
-    const trucoChallengeChoice = randomComputerChoice(2);
+    // const trucoChallengeChoice = randomComputerChoice(2);
+    const trucoChallengeChoice = 2;
     if (trucoChallengeChoice === 0) {
       roundWorth = suggestedRoundWorth;
       roundInfoEl.textContent = `${call} x${roundWorth}`;
@@ -910,13 +915,13 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
         messageEl.textContent = `${call} accepted!`;
         messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
         messageEl.classList.remove("hidden");
+        isMyTurn = true;
       }, timeDelay * 2);
       btnTrucoEl.classList.add("hidden");
       setTimeout(function () {
         messageEl.classList.add("hidden");
       }, timeDelay * 3);
     } else if (trucoChallengeChoice === 1) {
-      isMyTurn = false;
       roundWorth = currentRoundWorth;
       roundInfoEl.textContent = `${call} x${roundWorth}`;
       setTimeout(function () {
@@ -942,31 +947,50 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
       btnAcceptEl.classList.remove("hidden");
       btnRunEl.classList.remove("hidden");
       btnRaiseEl.classList.remove("hidden");
-
-      btnAcceptEl.addEventListener("click", function () {});
-
-      btnRunEl.addEventListener("click", function () {
-        btnAcceptEl.classList.add("hidden");
-        btnRunEl.classList.add("hidden");
-        btnRaiseEl.classList.add("hidden");
-
-        roundWorth = currentRoundWorth;
-
-        messageEl.textContent = `${call} declined!`;
-        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-        messageEl.classList.remove("hidden");
-        btnNextHand.classList.remove("hidden");
-
-        setTimeout(function () {
-          for (let r = 0; r < roundWorth; r++) scoreHandWinner("them");
-          btnNextHand.classList.remove("hidden");
-        }, timeDelay * 3);
-      });
-
-      btnRaiseEl.addEventListener("click", function () {});
+      globalCall = call;
+      globalCurrentRoundWorth = currentRoundWorth;
+      globalSuggestedRoundWorth = suggestedRoundWorth;
     }, timeDelay * 2.01);
   }
 }
+
+btnAcceptEl.addEventListener("click", function () {
+  btnAcceptEl.classList.add("hidden");
+  btnRunEl.classList.add("hidden");
+  btnRaiseEl.classList.add("hidden");
+
+  roundWorth = globalSuggestedRoundWorth;
+  roundInfoEl.textContent = `${globalCall} x${roundWorth}`;
+  messageEl.textContent = `${globalCall} accepted!`;
+
+  setTimeout(function () {
+    messageEl.classList.add("hidden");
+  }, timeDelay * 2);
+  isMyTurn = true;
+});
+
+btnRunEl.addEventListener("click", function () {
+  btnAcceptEl.classList.add("hidden");
+  btnRunEl.classList.add("hidden");
+  btnRaiseEl.classList.add("hidden");
+
+  roundWorth = globalCurrentRoundWorth;
+
+  messageEl.textContent = `${globalCall} declined!`;
+  messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+  messageEl.classList.remove("hidden");
+  btnNextHand.classList.remove("hidden");
+
+  for (let r = 0; r < roundWorth; r++) scoreHandWinner("them");
+  btnNextHand.classList.remove("hidden");
+});
+
+btnRaiseEl.addEventListener("click", function () {
+  btnAcceptEl.classList.add("hidden");
+  btnRunEl.classList.add("hidden");
+  btnRaiseEl.classList.add("hidden");
+  raiseHand(globalCurrentRoundWorth, "We");
+});
 
 function randomComputerChoice(numberOfOptions) {
   return Math.floor(Math.random() * (numberOfOptions + 1));
