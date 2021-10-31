@@ -515,8 +515,13 @@ function playRound() {
       }
     }
   }
+  if (blindHand === true) {
+    btnHideEl.classList.add("hidden");
+    btnTrucoEl.classList.add("hidden");
+  } else {
+    btnHideEl.classList.remove("hidden");
+  }
 }
-
 //PLAY CARD
 function PlayCard(position, whichPlayer, whichCard) {
   if (hideCard) {
