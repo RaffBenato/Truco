@@ -938,7 +938,7 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
       roundWorth = suggestedRoundWorth;
       roundInfoEl.textContent = `${call} x${roundWorth}`;
       btnTrucoEl.classList.add("hidden");
-      btnHideEl.classList.add("hidden");
+
       setTimeout(function () {
         raiseHand(roundWorth, "They");
       }, timeDelay * 2);
@@ -953,7 +953,7 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
       globalCall = call;
       globalCurrentRoundWorth = currentRoundWorth;
       globalSuggestedRoundWorth = suggestedRoundWorth;
-    }, timeDelay * 1);
+    }, timeDelay * 2.01);
   }
 }
 
