@@ -902,8 +902,7 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
   }, timeDelay * 2);
 
   if (whoIsRaising === "We") {
-    // const trucoChallengeChoice = randomComputerChoice(2);
-    const trucoChallengeChoice = 0;
+    const trucoChallengeChoice = randomComputerChoice(2);
     if (trucoChallengeChoice === 0) {
       roundWorth = suggestedRoundWorth;
       roundInfoEl.textContent = `${call} x${roundWorth}`;
@@ -947,17 +946,19 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
       btnAcceptEl.addEventListener("click", function () {});
 
       btnRunEl.addEventListener("click", function () {
-        roundWorth = suggestedRoundWorth;
-        roundInfoEl.textContent = `${call} x${roundWorth}`;
+        btnAcceptEl.classList.add("hidden");
+        btnRunEl.classList.add("hidden");
+        btnRaiseEl.classList.add("hidden");
+
+        roundWorth = currentRoundWorth;
+
+        messageEl.textContent = `${call} declined!`;
+        messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+        messageEl.classList.remove("hidden");
+        btnNextHand.classList.remove("hidden");
 
         setTimeout(function () {
-          // messageEl.textContent = `${call} declined!`;
-          messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-          messageEl.classList.remove("hidden");
-          btnNextHand.classList.remove("hidden");
-        }, timeDelay * 2);
-        setTimeout(function () {
-          scoreHandWinner("them");
+          for (let r = 0; r < roundWorth; r++) scoreHandWinner("them");
           btnNextHand.classList.remove("hidden");
         }, timeDelay * 3);
       });
