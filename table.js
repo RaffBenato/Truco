@@ -211,7 +211,18 @@ btnNextRound.addEventListener("click", function () {
 
 /////////////////////
 //NEXT HAND/////////
-btnNextHand.addEventListener("click", nextHand);
+btnNextHand.addEventListener("click", function () {
+  if (blindHand === true) {
+    messageEl.textContent = "Iron Hand!";
+    messageEl.classList.remove("hidden");
+    setTimeout(function () {
+      messageEl.classList.add("hidden");
+      nextHand();
+    }, timeDelay * 2);
+  } else {
+    nextHand();
+  }
+});
 
 /////////////////////
 //NEXT GAME/////////
@@ -906,8 +917,8 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
   }, timeDelay * 2);
 
   if (whoIsRaising === "We") {
-    // const trucoChallengeChoice = randomComputerChoice(2);
-    const trucoChallengeChoice = 2;
+    const trucoChallengeChoice = randomComputerChoice(2);
+    // const trucoChallengeChoice = ;
     if (trucoChallengeChoice === 0) {
       roundWorth = suggestedRoundWorth;
       roundInfoEl.textContent = `${call} x${roundWorth}`;
@@ -931,7 +942,7 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
         btnNextHand.classList.remove("hidden");
       }, timeDelay * 2);
       setTimeout(function () {
-        scoreHandWinner("us");
+        for (let r = 0; r < roundWorth; r++) scoreHandWinner("us");
         btnNextHand.classList.remove("hidden");
       }, timeDelay * 3);
     } else {
