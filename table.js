@@ -140,6 +140,7 @@ let isGameOver = false;
 let twoDraws = false;
 let blindHand = false;
 let ourElevenHand = false;
+let theirElevenHand = false;
 let decidingOnElevenHand = false;
 const timeDelay = 600;
 let roundNumber = 0;
@@ -235,6 +236,15 @@ btnNextHand.addEventListener("click", function () {
         handTurnCounter = 3;
         nextHand();
       }, timeDelay * 2);
+    } else if (theirElevenHand === true) {
+      messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+      messageEl.textContent = "11's Hand for Them!";
+      messageEl.classList.remove("hidden");
+      btnNextHand.classList.add("hidden");
+      setTimeout(function () {
+        messageEl.classList.add("hidden");
+        nextHand();
+      }, timeDelay * 2);
     } else {
       nextHand();
     }
@@ -250,6 +260,7 @@ btnNextGameEl.addEventListener("click", function () {
   isGameOver = false;
   blindHand = false;
   ourElevenHand = false;
+  theirElevenHand = false;
 
   usTotalEl.textContent = handWinnerTracker[0];
   themTotalEl.textContent = handWinnerTracker[1];
@@ -404,7 +415,32 @@ function nextHand() {
   setUpCards();
   resetMiddleCards();
   roundTurnCounter = 0;
-  playRound();
+  if (theirElevenHand === true) {
+    const computerDecidesToAcceptElevenHand = randomComputerChoice(1);
+    if (computerDecidesToAcceptElevenHand === 0) {
+      setTimeout(function () {
+        messageEl.classList.remove("hidden");
+        messageEl.textContent = "Hand declined!";
+        scoreHandWinner("us");
+      }, timeDelay * 2);
+      setTimeout(function () {
+        btnNextHand.classList.remove("hidden");
+      }, timeDelay * 4);
+    } else {
+      setTimeout(function () {
+        messageEl.classList.remove("hidden");
+        messageEl.textContent = "Hand Accepted!";
+        roundInfoEl.textContent = `Truco x3`;
+        roundWorth = 3;
+      }, timeDelay * 2);
+      setTimeout(function () {
+        messageEl.classList.add("hidden");
+        playRound();
+      }, timeDelay * 4);
+    }
+  } else {
+    playRound();
+  }
 }
 
 //CREATES THE DECK OF CARDS
@@ -883,13 +919,20 @@ function scoreHandWinner(whoWon) {
     if (handWinnerTracker[0] === 11 && handWinnerTracker[1] === 11) {
       blindHand = true;
       ourElevenHand = false;
+      theirElevenHand = false;
     } else {
       blindHand = false;
       ourElevenHand = true;
+      theirElevenHand = false;
     }
+  } else if (handWinnerTracker[1] === 11) {
+    blindHand = false;
+    ourElevenHand = false;
+    theirElevenHand = true;
   } else {
     blindHand = false;
     ourElevenHand = false;
+    theirElevenHand = false;
   }
 
   handWinnerTracker[0] <= 12
