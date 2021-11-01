@@ -140,6 +140,7 @@ let isGameOver = false;
 let twoDraws = false;
 let blindHand = false;
 let ourElevenHand = false;
+let decidingOnElevenHand = false;
 const timeDelay = 600;
 let roundNumber = 0;
 let randomCard;
@@ -186,7 +187,6 @@ btnStartRound.addEventListener("click", function () {
   btnStartRound.classList.add("hidden");
   btnTrucoEl.classList.remove("hidden");
   btnHideEl.classList.remove("hidden");
-
   playRound();
 });
 
@@ -225,14 +225,15 @@ btnNextHand.addEventListener("click", function () {
   } else {
     if (ourElevenHand === true) {
       messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-      messageEl.textContent = "11's Hand!";
+      messageEl.textContent = "11's Hand for Us!";
       messageEl.classList.remove("hidden");
       btnNextHand.classList.add("hidden");
       btnTrucoEl.classList.add("hidden");
 
       setTimeout(function () {
         messageEl.classList.add("hidden");
-        // nextHand();
+        handTurnCounter = 3;
+        nextHand();
       }, timeDelay * 2);
     } else {
       nextHand();
@@ -248,6 +249,7 @@ btnNextGameEl.addEventListener("click", function () {
   handWinnerTracker = [0, 0];
   isGameOver = false;
   blindHand = false;
+  ourElevenHand = false;
 
   usTotalEl.textContent = handWinnerTracker[0];
   themTotalEl.textContent = handWinnerTracker[1];
@@ -350,6 +352,51 @@ function nextHand() {
   handOutCards(handPlayer1);
   handOutCards(handPlayer2);
   handOutCards(handPlayer3);
+
+  if (ourElevenHand === true) {
+    btnTrucoEl.classList.add("hidden");
+    btnHideEl.classList.add("hidden");
+
+    player3CardsEl.forEach(function (card, i) {
+      card.classList.remove(`card-diamond`);
+      card.classList.remove(`card-heart`);
+      card.classList.remove(`card-spade`);
+      card.classList.remove(`card-club`);
+      card.innerHTML = ``;
+      const html = `
+      <div class="number-top">
+        <h1 class="player3-card${i + 1}-number">${handPlayer3[i][1]}</h1>
+      </div>
+      <div class="number-bottom">
+        <h1 class="player3-card${i + 1}-number">${handPlayer3[i][1]}</h1>
+      </div>
+      <div class="suit">
+        <img class="suit-img player3-card${i + 1}-suit" src="img/${
+        handPlayer3[i][2]
+      }.png" alt="" />
+      </div>`;
+      card.classList.add(`card-${handPlayer3[i][2]}`);
+      card.insertAdjacentHTML(`afterbegin`, html);
+      card.classList.remove("card-back");
+      card.classList.add("card-front");
+    });
+
+    btnRunEl.classList.remove("hidden");
+    btnAcceptEl.classList.remove("hidden");
+    decidingOnElevenHand = true;
+    isMyTurn = false;
+  } else {
+    player3CardsEl.forEach(function (card, i) {
+      card.innerHTML = ``;
+      card.classList.remove(`card-diamond`);
+      card.classList.remove(`card-heart`);
+      card.classList.remove(`card-spade`);
+      card.classList.remove(`card-club`);
+      card.classList.remove("card-front");
+      card.classList.add("card-back");
+    });
+  }
+
   handOutCards(handPlayer4);
   flipCard();
   findsTrump();
@@ -359,6 +406,7 @@ function nextHand() {
   roundTurnCounter = 0;
   playRound();
 }
+
 //CREATES THE DECK OF CARDS
 function createDeck() {
   let p = 1;
@@ -521,7 +569,7 @@ function playRound() {
     roundTurnCounter++
   ) {
     if (roundTurn[roundTurnCounter] === handPlayer1) {
-      isMyTurn = true;
+      if (decidingOnElevenHand === false) isMyTurn = true;
       break;
     } else {
       // if (
@@ -557,7 +605,7 @@ function playRound() {
       }
     }
   }
-  if (blindHand === true) {
+  if (blindHand === true || ourElevenHand === true) {
     btnHideEl.classList.add("hidden");
     btnTrucoEl.classList.add("hidden");
   } else {
@@ -801,6 +849,8 @@ function scoreHandWinner(whoWon) {
       messageEl.textContent = `We win the Game!!!`;
       messageEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
       btnNextHand.classList.remove("hidden");
+      overlayTableEl.style.backgroundColor = "rgba(2, 138, 43, 0.8)";
+
       overlayTableEl.classList.remove("hidden");
       btnNextGameEl.classList.remove("hidden");
       isGameOver = true;
@@ -832,6 +882,7 @@ function scoreHandWinner(whoWon) {
   if (handWinnerTracker[0] === 11) {
     if (handWinnerTracker[0] === 11 && handWinnerTracker[1] === 11) {
       blindHand = true;
+      ourElevenHand = false;
     } else {
       blindHand = false;
       ourElevenHand = true;
@@ -995,15 +1046,37 @@ btnAcceptEl.addEventListener("click", function () {
   btnAcceptEl.classList.add("hidden");
   btnRunEl.classList.add("hidden");
   btnRaiseEl.classList.add("hidden");
+  if (decidingOnElevenHand === true) {
+    player3CardsEl.forEach(function (card, i) {
+      card.innerHTML = ``;
+      card.classList.remove(`card-diamond`);
+      card.classList.remove(`card-heart`);
+      card.classList.remove(`card-spade`);
+      card.classList.remove(`card-club`);
+      card.classList.remove("card-front");
+      card.classList.add("card-back");
+    });
 
-  roundWorth = globalSuggestedRoundWorth;
-  roundInfoEl.textContent = `${globalCall} x${roundWorth}`;
-  messageEl.textContent = `${globalCall} accepted!`;
+    decidingOnElevenHand = false;
+    roundWorth = 3;
+    roundInfoEl.textContent = `Truco x3`;
+    messageEl.textContent = `Hand accepted!`;
+    messageEl.classList.remove("hidden");
 
-  setTimeout(function () {
-    messageEl.classList.add("hidden");
-  }, timeDelay * 2);
-  isMyTurn = true;
+    setTimeout(function () {
+      messageEl.classList.add("hidden");
+    }, timeDelay * 2);
+    isMyTurn = true;
+  } else {
+    roundWorth = globalSuggestedRoundWorth;
+    roundInfoEl.textContent = `${globalCall} x${roundWorth}`;
+    messageEl.textContent = `${globalCall} accepted!`;
+
+    setTimeout(function () {
+      messageEl.classList.add("hidden");
+    }, timeDelay * 2);
+    isMyTurn = true;
+  }
 });
 
 btnRunEl.addEventListener("click", function () {
@@ -1011,15 +1084,27 @@ btnRunEl.addEventListener("click", function () {
   btnRunEl.classList.add("hidden");
   btnRaiseEl.classList.add("hidden");
 
-  roundWorth = globalCurrentRoundWorth;
+  if (decidingOnElevenHand === true) {
+    decidingOnElevenHand = false;
+    scoreHandWinner("them");
 
-  messageEl.textContent = `${globalCall} declined!`;
-  messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
-  messageEl.classList.remove("hidden");
-  btnNextHand.classList.remove("hidden");
+    messageEl.textContent = `Hand declined!`;
+    messageEl.classList.remove("hidden");
+    setTimeout(function () {
+      btnNextHand.classList.remove("hidden");
+      messageEl.classList.add("hidden");
+    }, timeDelay * 2);
+  } else {
+    roundWorth = globalCurrentRoundWorth;
 
-  for (let r = 0; r < roundWorth; r++) scoreHandWinner("them");
-  btnNextHand.classList.remove("hidden");
+    messageEl.textContent = `${globalCall} declined!`;
+    messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+    messageEl.classList.remove("hidden");
+    btnNextHand.classList.remove("hidden");
+
+    for (let r = 0; r < roundWorth; r++) scoreHandWinner("them");
+    btnNextHand.classList.remove("hidden");
+  }
 });
 
 btnRaiseEl.addEventListener("click", function () {
