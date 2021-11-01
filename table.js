@@ -139,6 +139,7 @@ let hideCard = false;
 let isGameOver = false;
 let twoDraws = false;
 let blindHand = false;
+let ourElevenHand = false;
 const timeDelay = 600;
 let roundNumber = 0;
 let randomCard;
@@ -222,7 +223,20 @@ btnNextHand.addEventListener("click", function () {
       nextHand();
     }, timeDelay * 2);
   } else {
-    nextHand();
+    if (ourElevenHand === true) {
+      messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
+      messageEl.textContent = "11's Hand!";
+      messageEl.classList.remove("hidden");
+      btnNextHand.classList.add("hidden");
+      btnTrucoEl.classList.add("hidden");
+
+      setTimeout(function () {
+        messageEl.classList.add("hidden");
+        // nextHand();
+      }, timeDelay * 2);
+    } else {
+      nextHand();
+    }
   }
 });
 
@@ -815,11 +829,18 @@ function scoreHandWinner(whoWon) {
   } else {
   }
   handCounter++;
-  if (handWinnerTracker[0] === 11 && handWinnerTracker[1] === 11) {
-    blindHand = true;
+  if (handWinnerTracker[0] === 11) {
+    if (handWinnerTracker[0] === 11 && handWinnerTracker[1] === 11) {
+      blindHand = true;
+    } else {
+      blindHand = false;
+      ourElevenHand = true;
+    }
   } else {
     blindHand = false;
+    ourElevenHand = false;
   }
+
   handWinnerTracker[0] <= 12
     ? (usTotalEl.textContent = handWinnerTracker[0])
     : (usTotalEl.textContent = 12);
