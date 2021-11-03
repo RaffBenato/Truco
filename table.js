@@ -151,6 +151,7 @@ let handCounter = 0;
 let globalCurrentRoundWorth;
 let globalCall;
 let globalSuggestedRoundWorth;
+let nextcall = ``;
 
 //FLIPPED AND TRUMP CARDS
 let flippedCard = [];
@@ -439,7 +440,20 @@ function nextHand() {
       }, timeDelay * 4);
     }
   } else {
-    playRound();
+    if (
+      roundTurn[roundTurnCounter] === handPlayer2 ||
+      roundTurn[roundTurnCounter] === handPlayer4
+    ) {
+      let computerDecidestoCallTruco = randomComputerChoice(6);
+      if (computerDecidestoCallTruco === 0) {
+        btnTrucoEl.classList.add("hidden");
+        raiseHand(roundWorth, "They");
+      } else {
+        playRound();
+      }
+    } else {
+      playRound();
+    }
   }
 }
 
@@ -1012,14 +1026,17 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
     case 1:
       call = "Truco";
       suggestedRoundWorth = 3;
+      nextcall = `Seis`;
       break;
     case 3:
       call = "Seis";
       suggestedRoundWorth = 6;
+      nextcall = `Nove`;
       break;
     case 6:
       call = "Nove";
       suggestedRoundWorth = 9;
+      nextcall = `Nove`;
       break;
     case 9:
       call = "Doze";
@@ -1043,7 +1060,8 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
         messageEl.textContent = `${call} accepted!`;
         messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
         messageEl.classList.remove("hidden");
-        isMyTurn = true;
+        playRound();
+        // isMyTurn = true;
       }, timeDelay * 2);
       btnTrucoEl.classList.add("hidden");
       setTimeout(function () {
@@ -1116,9 +1134,12 @@ btnAcceptEl.addEventListener("click", function () {
     messageEl.textContent = `${globalCall} accepted!`;
 
     setTimeout(function () {
+      if (globalCall !== `Doze`) btnTrucoEl.textContent = nextcall;
+      btnTrucoEl.classList.remove("hidden");
       messageEl.classList.add("hidden");
+      playRound();
     }, timeDelay * 2);
-    isMyTurn = true;
+    // isMyTurn = true;
   }
 });
 
