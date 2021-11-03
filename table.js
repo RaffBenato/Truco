@@ -440,6 +440,7 @@ function nextHand() {
       }, timeDelay * 4);
     }
   } else {
+    //////////// IMPORTANT
     if (
       roundTurn[roundTurnCounter] === handPlayer2 ||
       roundTurn[roundTurnCounter] === handPlayer4
@@ -1134,8 +1135,10 @@ btnAcceptEl.addEventListener("click", function () {
     messageEl.textContent = `${globalCall} accepted!`;
 
     setTimeout(function () {
-      if (globalCall !== `Doze`) btnTrucoEl.textContent = nextcall;
-      btnTrucoEl.classList.remove("hidden");
+      if (globalCall !== `Doze`) {
+        btnTrucoEl.textContent = nextcall;
+        btnTrucoEl.classList.remove("hidden");
+      }
       messageEl.classList.add("hidden");
       playRound();
     }, timeDelay * 2);
