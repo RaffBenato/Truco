@@ -764,7 +764,11 @@ body {
       top: 89%;
       height: 35px;
       width: 120px;
-      left: 280px;
+      left: 300px;
+    }
+
+    .btn-dont-hide {
+      top: 70%;
     }
 
     .btn-next-round,
@@ -774,12 +778,60 @@ body {
       width: 140px;
     }
 
+    .btn-accept,
+    .btn-run,
+    .btn-raise {
+      height: 35px;
+      top: 70%;
+    }
+
+    .btn-accept {
+      left: 15%;
+    }
+
+    .btn-run {
+      left: 85%;
+    }
+
+    .btn-raise {
+      left: 50%;
+    }
+
     .middle {
       height: 50%;
       width: 90%;
 
       .mount {
         display: none;
+      }
+
+      .position-bottom {
+        position: absolute;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 82px;
+        min-height: 111px;
+        margin: 0;
+      }
+
+      .position-top {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%) rotate(180deg);
+        min-width: 82px;
+        min-height: 111px;
+        margin: 0;
+      }
+
+      .position-left {
+        left: 5%;
+        transform: translateY(-50%) rotate(90deg);
+      }
+
+      .position-right {
+        right: 20px;
       }
     }
   }
