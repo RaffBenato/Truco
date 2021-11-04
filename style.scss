@@ -628,12 +628,11 @@ body {
     overflow: hidden;
     .info {
       top: 0px;
-      left: 267px;
+      left: 280px;
       width: 45px;
 
       h1 {
         font-size: 20px;
-        font-weight: 600;
       }
     }
 
@@ -645,7 +644,7 @@ body {
 
     .trump-cards {
       top: 0;
-      left: 20%;
+      left: 15%;
       height: 8%;
       width: 40%;
 
@@ -690,7 +689,8 @@ body {
         width: 50%;
 
         h1 {
-          font-size: 10px;
+          font-size: 12px;
+          font-weight: 600;
         }
 
         .point-1 {
@@ -715,6 +715,12 @@ body {
 
     .bottom {
       bottom: 45px;
+      left: 250px;
+
+      .card-body {
+        min-width: 69px;
+        min-height: 92px;
+      }
     }
 
     .btn-truco {
@@ -729,6 +735,23 @@ body {
       height: 35px;
       width: 120px;
       left: 280px;
+    }
+
+    .middle {
+      height: 60%;
+      width: 90%;
+
+      .mount {
+        .card-body {
+          min-width: 50px;
+          min-height: 70px;
+          margin: 0;
+        }
+        .mount-trump {
+          min-width: 50px;
+          min-height: 70px;
+        }
+      }
     }
   }
 
