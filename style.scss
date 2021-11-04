@@ -704,14 +704,6 @@ body {
       }
     }
 
-    .message {
-      top: 40%;
-      width: 120px;
-      height: 50px;
-      font-size: 20px;
-      padding: 10px;
-    }
-
     .top {
       top: 65px;
     }
@@ -735,6 +727,31 @@ body {
         min-height: 92px;
       }
     }
+    .btn-start,
+    .message,
+    .btn-next-round,
+    .btn-next-hand,
+    .btn-truco,
+    .btn-hide,
+    .btn-dont-hide,
+    .btn-next-game,
+    .btn-accept,
+    .btn-run,
+    .btn-raise {
+      top: 45%;
+      left: 50%;
+      width: 120px;
+      height: 35px;
+      font-size: 20px;
+    }
+
+    .message {
+      top: 20%;
+      width: 120px;
+      height: 50px;
+      font-size: 20px;
+      padding: 10px;
+    }
 
     .btn-truco {
       top: 89%;
@@ -750,8 +767,15 @@ body {
       left: 280px;
     }
 
+    .btn-next-round,
+    .btn-next-hand,
+    .btn-next-game {
+      top: 70%;
+      width: 140px;
+    }
+
     .middle {
-      height: 70%;
+      height: 50%;
       width: 90%;
 
       .mount {
