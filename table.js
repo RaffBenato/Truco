@@ -1023,25 +1023,30 @@ btnTrucoEl.addEventListener("click", function () {
 function raiseHand(currentRoundWorth, whoIsRaising) {
   let call = "";
   let suggestedRoundWorth;
+  let previousCall = ``;
   switch (currentRoundWorth) {
     case 1:
       call = "Truco";
       suggestedRoundWorth = 3;
       nextcall = `Seis`;
+      previousCall = `Round`;
       break;
     case 3:
       call = "Seis";
       suggestedRoundWorth = 6;
       nextcall = `Nove`;
+      previousCall = `Truco`;
       break;
     case 6:
       call = "Nove";
       suggestedRoundWorth = 9;
       nextcall = `Nove`;
+      previousCall = `Seis`;
       break;
     case 9:
       call = "Doze";
       suggestedRoundWorth = 12;
+      previousCall = `Nove`;
       break;
   }
   messageEl.textContent = `${whoIsRaising} called ${call}`;
@@ -1070,7 +1075,7 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
       }, timeDelay * 3);
     } else if (trucoChallengeChoice === 1) {
       roundWorth = currentRoundWorth;
-      roundInfoEl.textContent = `${call} x${roundWorth}`;
+      roundInfoEl.textContent = `${previousCall} x${roundWorth}`;
       setTimeout(function () {
         messageEl.textContent = `${call} declined!`;
         messageEl.style.backgroundColor = "rgba(15, 12, 175, 0.8)";
