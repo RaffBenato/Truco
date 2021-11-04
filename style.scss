@@ -625,12 +625,15 @@ body {
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   .container {
+    overflow: hidden;
     .info {
-      transform: translateX(300%);
+      top: 0px;
+      left: 267px;
       width: 45px;
 
       h1 {
         font-size: 20px;
+        font-weight: 600;
       }
     }
 
@@ -641,7 +644,7 @@ body {
     }
 
     .trump-cards {
-      top: 2%;
+      top: 0;
       left: 20%;
       height: 8%;
       width: 40%;
@@ -678,6 +681,7 @@ body {
     }
 
     .score {
+      top: 0px;
       width: 50px;
       height: 85%;
       .us,
@@ -696,7 +700,7 @@ body {
     }
 
     .top {
-      top: 75px;
+      top: 65px;
     }
 
     .left {
@@ -710,18 +714,18 @@ body {
     }
 
     .bottom {
-      bottom: 15px;
+      bottom: 45px;
     }
 
     .btn-truco {
-      top: 93%;
+      top: 89%;
       height: 35px;
       width: 120px;
       left: 80px;
     }
 
     .btn-hide {
-      top: 93%;
+      top: 89%;
       height: 35px;
       width: 120px;
       left: 280px;
@@ -740,5 +744,11 @@ body {
     background-image: url(/img/back.png);
     background-size: cover;
     background-repeat: no-repeat;
+  }
+
+  .container-front {
+    .logo {
+      transform: scale(1);
+    }
   }
 }
