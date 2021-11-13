@@ -446,6 +446,7 @@ function nextHand() {
       roundTurn[roundTurnCounter] === handPlayer4
     ) {
       let computerDecidestoCallTruco = randomComputerChoice(6);
+      // let computerDecidestoCallTruco = 0;
       if (computerDecidestoCallTruco === 0) {
         btnTrucoEl.classList.add("hidden");
         raiseHand(roundWorth, "They");
@@ -1040,7 +1041,7 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
     case 6:
       call = "Nove";
       suggestedRoundWorth = 9;
-      nextcall = `Nove`;
+      nextcall = `Doze`;
       previousCall = `Seis`;
       break;
     case 9:
@@ -1057,8 +1058,15 @@ function raiseHand(currentRoundWorth, whoIsRaising) {
   }, timeDelay * 2);
 
   if (whoIsRaising === "We") {
-    const trucoChallengeChoice = randomComputerChoice(2);
-    // const trucoChallengeChoice = ;
+    debugger;
+    let trucoChallengeChoice;
+    if (currentRoundWorth === 9) {
+      trucoChallengeChoice = randomComputerChoice(1);
+    } else {
+      const trucoChallengeChoice = randomComputerChoice(2);
+      // trucoChallengeChoice = 2;
+    }
+
     if (trucoChallengeChoice === 0) {
       roundWorth = suggestedRoundWorth;
       roundInfoEl.textContent = `${call} x${roundWorth}`;
